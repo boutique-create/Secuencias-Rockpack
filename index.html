@@ -374,7 +374,7 @@
                 </tbody>
             </table>
 
-            <button class="btn-modal-trigger" id="openModalBtn" onclick="toggleModal(true)">📂 VER LISTA DE LAS 110 CANCIONES</button>
+            <button class="btn-modal-trigger" id="openModalBtn" onclick="document.getElementById('modalOverlay').classList.add('active'); document.body.style.overflow='hidden';">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
                 <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
@@ -461,7 +461,4 @@
         </div>
     </main>
 
-    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target === this) toggleModal(false)">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Contenido de
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target === this) { this.classList.remove('active'); doc
