@@ -6,14 +6,17 @@
     <title>Boutique-Create | Secuencias Musicales</title>
     <style>
         :root {
-            --bg-light: #f3f4f6;       /* Fondo claro del estudio */
-            --bg-card: #212529;        /* Consola gris oscuro/negro texturizado */
-            --border-rack: #343a40;    /* Bordes estilo equipo de audio */
-            --text-light: #ffffff;     /* Texto dentro de la consola */
-            --text-muted: #adb5bd;    /* Descripciones atenuadas */
-            --cyan-led: #00fff0;       /* Color cyan brillante para el botón */
+            --bg-light: #f3f4f6;       
+            --bg-card: #212529;        
+            --border-rack: #343a40;    
+            --text-light: #ffffff;     
+            --text-muted: #adb5bd;    
+            --cyan-led: #00fff0;       
             --cyan-led-hover: #00e1d5;
-            --success-green: #10b981;  /* Indicador LED verde */
+            --success-green: #10b981;  
+            --danger-red: #ef4444;
+            --warning: #ffb703;
+            --daw-bg: #151719;
         }
 
         *, *::before, *::after {
@@ -29,7 +32,6 @@
             display: block;
         }
 
-        /* Contenedor Superior Blanco con el Logo de la Onda */
         .brand-header {
             background-color: #ffffff;
             padding: 50px 20px 40px 20px;
@@ -52,7 +54,6 @@
             margin: 0;
         }
 
-        /* Sección de la Consola / Tarjeta de Producto */
         .main-content {
             max-width: 680px;
             margin: 0 auto 60px auto;
@@ -84,7 +85,6 @@
             margin: 0 0 30px 0;
         }
 
-        /* Tabla de Estructura Multi-Track */
         .track-table {
             width: 100%;
             border-collapse: collapse;
@@ -124,7 +124,6 @@
             font-size: 1.1rem;
         }
 
-        /* Botón Secundario para Abrir la Ventana Modal */
         .btn-modal-trigger {
             display: block;
             background: none;
@@ -135,7 +134,7 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 600;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 30px auto;
             transition: all 0.2s;
         }
 
@@ -145,201 +144,176 @@
             background-color: rgba(255,255,255,0.05);
         }
 
-        /* Bloque de Precio Destacado */
-        .price-container {
-            text-align: center;
-            margin: 30px 0 25px 0;
+        /* --- CONSOLA DAW INTERACTIVA --- */
+        .daw-container {
+            background-color: var(--daw-bg);
+            border: 2px solid var(--border-rack);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
         }
 
-        .price-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .daw-title {
+            font-size: 0.9rem;
+            color: var(--cyan-led);
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .price-value {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: -1px;
-        }
-
-        /* Recuadro de Especificación Técnica (16GB MEGA) */
-        .tech-spec-box {
-            background-color: rgba(0, 0, 0, 0.25);
-            border: 1px solid #495057;
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin-bottom: 35px;
+            margin: 0 0 5px 0;
+            font-weight: bold;
             text-align: center;
         }
 
-        .tech-spec-box .badge {
-            display: inline-block;
-            background-color: #495057;
-            color: #ffffff;
-            padding: 3px 12px;
-            border-radius: 4px;
+        .daw-subtitle {
             font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .daw-master-controls {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed var(--border-rack);
+            padding-bottom: 15px;
+        }
+
+        .btn-master {
+            background-color: #343a40;
+            border: 1px solid #495057;
+            color: white;
+            padding: 10px 28px;
             font-weight: bold;
-            margin-bottom: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
             letter-spacing: 0.5px;
         }
+        .btn-master:hover { background-color: #495057; }
+        .btn-master.playing { background-color: var(--success-green); border-color: #1ea867; }
 
-        .tech-spec-box p {
-            margin: 0;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        /* Contenedor del Botón para Centrado Absoluto */
-        .action-container {
-            width: 100%;
-            text-align: center;
-            margin: 0 auto;
-        }
-
-        /* Botón de Acción Principal */
-        .btn-acquire {
-            display: inline-block;
-            background-color: var(--cyan-led);
-            color: #0d1117;
-            text-decoration: none;
-            padding: 18px 0;
-            width: 90%;
-            max-width: 420px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.15rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 20px rgba(0, 255, 240, 0.4);
-            margin: 0 auto;
-        }
-
-        .btn-acquire:hover {
-            background-color: var(--cyan-led-hover);
-            transform: scale(1.02);
-            box-shadow: 0 0 28px rgba(0, 255, 240, 0.6);
-        }
-
-        /* ESTILOS DE LA VENTANA MODAL (EMERGENTE) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-box {
-            background-color: var(--bg-card);
-            border: 2px solid var(--border-rack);
-            border-radius: 12px;
-            width: 100%;
-            max-width: 550px;
-            max-height: 80vh;
+        .daw-channel {
             display: flex;
             flex-direction: column;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            animation: slideUp 0.3s ease;
+            background: #1d2023;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            border-left: 4px solid #495057;
         }
-
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 20px 25px;
-            border-bottom: 1px solid #343a40;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            font-size: 1.3rem;
-            color: #ffffff;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.8rem;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-        }
-
-        .modal-close:hover {
-            color: #ffffff;
-        }
-
-        .modal-body {
-            padding: 25px;
-            overflow-y: auto; /* Permite scroll vertical interno */
-            flex-grow: 1;
-            text-align: left;
-        }
-
-        /* Lista de canciones estilizada de 2 en 2 en pantallas grandes */
-        .songs-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-            padding: 0;
-            margin: 0;
-            list-style: none;
-        }
-
-        @media (min-width: 480px) {
-            .songs-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
+        
+        @media (min-width: 520px) {
+            .daw-channel {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
             }
         }
 
-        .songs-grid li {
-            font-size: 0.9rem;
-            color: #dee2e6;
-            padding: 6px 10px;
-            background-color: rgba(255,255,255,0.02);
-            border-left: 3px solid var(--cyan-led);
-            border-radius: 0 4px 4px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .daw-channel.ch-stereo { border-left-color: #a855f7; }
+        .daw-channel.ch-bass { border-left-color: #ec4899; }
+        .daw-channel.ch-click { border-left-color: #f59e0b; }
+
+        .channel-info {
+            flex-grow: 1;
+            text-align: left;
+            margin-bottom: 12px;
+        }
+        @media (min-width: 520px) { .channel-info { margin-bottom: 0; } }
+
+        .channel-name { font-size: 0.9rem; font-weight: bold; margin: 0; }
+        .channel-track-title { font-size: 0.75rem; color: var(--text-muted); margin: 2px 0 0 0; }
+
+        .channel-controls-group {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: space-between;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.85rem;
-            color: #6c757d;
-            background-color: var(--bg-light);
+        /* Controles de Paneo (Slider) */
+        .pan-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
         }
+
+        .pan-slider {
+            -webkit-appearance: none;
+            width: 80px;
+            height: 4px;
+            background: #343a40;
+            border-radius: 2px;
+            outline: none;
+        }
+        .pan-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cyan-led);
+            cursor: pointer;
+        }
+        .pan-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--cyan-led);
+            cursor: pointer;
+        }
+
+        .channel-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-daw {
+            width: 36px;
+            height: 32px;
+            border: 1px solid #495057;
+            background-color: #2a2e33;
+            color: var(--text-muted);
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-daw.mute-active { background-color: var(--danger-red); color: white; border-color: var(--danger-red); }
+        .btn-daw.solo-active { background-color: var(--warning); color: #000; border-color: var(--warning); }
+
+        /* --- PRECIOS Y BOTÓN COMPRA --- */
+        .price-container { text-align: center; margin: 30px 0 25px 0; }
+        .price-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .price-value { font-size: 3rem; font-weight: 800; color: #ffffff; letter-spacing: -1px; }
+
+        .tech-spec-box { background-color: rgba(0, 0, 0, 0.25); border: 1px solid #495057; border-radius: 8px; padding: 15px 20px; margin-bottom: 35px; text-align: center; }
+        .tech-spec-box .badge { display: inline-block; background-color: #495057; color: #ffffff; padding: 3px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .tech-spec-box p { margin: 0; font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+        .action-container { width: 100%; text-align: center; margin: 0 auto; }
+        .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s ease; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); margin: 0 auto; }
+        .btn-acquire:hover { background-color: var(--cyan-led-hover); transform: scale(1.02); box-shadow: 0 0 28px rgba(0, 255, 240, 0.6); }
+
+        /* MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 550px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { padding: 20px 25px; border-bottom: 1px solid #343a40; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { margin: 0; font-size: 1.3rem; color: #ffffff; }
+        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; line-height: 1; padding: 0; }
+        .modal-close:hover { color: #ffffff; }
+        .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; text-align: left; }
+        .songs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; margin: 0; list-style: none; }
+        @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
+        .songs-grid li { font-size: 0.9rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #6c757d; background-color: var(--bg-light); }
     </style>
 </head>
 <body>
@@ -399,6 +373,69 @@
 
             <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
+            <div class="daw-container">
+                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
+                <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
+                
+                <div class="daw-master-controls">
+                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR TODOS</button>
+                </div>
+
+                <div class="daw-channel ch-stereo">
+                    <div class="channel-info">
+                        <p class="channel-name">Stereo Instruments</p>
+                        <p class="channel-track-title">Eye in the Sky</p>
+                    </div>
+                    <div class="channel-controls-group">
+                        <div class="pan-container">
+                            <span>L</span>
+                            <input type="range" class="pan-slider" data-channel="stereo" min="-1" max="1" step="0.1" value="0">
+                            <span>R</span>
+                        </div>
+                        <div class="channel-buttons">
+                            <button class="btn-daw btn-mute" data-channel="stereo">M</button>
+                            <button class="btn-daw btn-solo" data-channel="stereo">S</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daw-channel ch-bass">
+                    <div class="channel-info">
+                        <p class="channel-name">Bass Track</p>
+                        <p class="channel-track-title">Eye in the Sky</p>
+                    </div>
+                    <div class="channel-controls-group">
+                        <div class="pan-container">
+                            <span>L</span>
+                            <input type="range" class="pan-slider" data-channel="bass" min="-1" max="1" step="0.1" value="0">
+                            <span>R</span>
+                        </div>
+                        <div class="channel-buttons">
+                            <button class="btn-daw btn-mute" data-channel="bass">M</button>
+                            <button class="btn-daw btn-solo" data-channel="bass">S</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="daw-channel ch-click">
+                    <div class="channel-info">
+                        <p class="channel-name">Click Track</p>
+                        <p class="channel-track-title">Eye in the Sky</p>
+                    </div>
+                    <div class="channel-controls-group">
+                        <div class="pan-container">
+                            <span>L</span>
+                            <input type="range" class="pan-slider" data-channel="click" min="-1" max="1" step="0.1" value="0">
+                            <span>R</span>
+                        </div>
+                        <div class="channel-buttons">
+                            <button class="btn-daw btn-mute" data-channel="click">M</button>
+                            <button class="btn-daw btn-solo" data-channel="click">S</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="price-container">
                 <span class="price-label">Precio Único:</span>
                 <span class="price-value">$1,699 MXN</span>
@@ -406,7 +443,7 @@
 
             <div class="tech-spec-box">
                 <span class="badge">16GB MEGA</span>
-                <p>La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA. Verifique su espacio en disco antes de proceder.</p>
+                <p>La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA.</p>
             </div>
 
             <div class="action-container">
@@ -423,147 +460,4 @@
             </div>
             <div class="modal-body">
                 <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li>
-                    <li>2. ADVENTURE OF A LIFETIME</li>
-                    <li>3. AFRICA</li>
-                    <li>4. ANOTHER BRICK IN THE WALL</li>
-                    <li>5. ANOTHER DAY IN PARADISE</li>
-                    <li>6. BABY COME BACK</li>
-                    <li>7. BACK IN BLACK</li>
-                    <li>8. BILLIE JEAN</li>
-                    <li>9. BLACK ORPHEUS</li>
-                    <li>10. BLACK VELVET</li>
-                    <li>11. BODY AND SOUL</li>
-                    <li>12. BREATHLESS</li>
-                    <li>13. CLOSE TO YOU</li>
-                    <li>14. COCAINE</li>
-                    <li>15. COME TOGETHER</li>
-                    <li>16. COMFORTABLY NUMB</li>
-                    <li>17. COSMIC GIRL</li>
-                    <li>18. CRAZY LITTLE THING CALLED LOVE</li>
-                    <li>19. CREEP</li>
-                    <li>20. DANCE MONKEY</li>
-                    <li>21. DUA LIPA MEDLEY</li>
-                    <li>22. ENGLISHMAN IN NEW YORK</li>
-                    <li>23. ENTER SANDMAN</li>
-                    <li>24. EUROPE</li>
-                    <li>25. EVERY BREATH YOU TAKE</li>
-                    <li>26. EVERYTIME YOU GO AWAY</li>
-                    <li>27. EVERYBODY WANTS TO RULE THE WORLD</li>
-                    <li>28. EVERYTHING</li>
-                    <li>29. EYE IN THE SKY</li>
-                    <li>30. FANTASY</li>
-                    <li>31. HARD TO SAY I'M SORRY</li>
-                    <li>32. HAVE YOU EVER SEEN THE RAIN</li>
-                    <li>33. HERE WE ARE</li>
-                    <li>34. HOLD THE LINE</li>
-                    <li>35. HOPELESSLY DEVOTED TO YOU</li>
-                    <li>36. HOTEL CALIFORNIA</li>
-                    <li>37. HOW DEEP IS YOUR LOVE</li>
-                    <li>38. IF I AIN'T GOT YOU</li>
-                    <li>39. IF YOU LEAVE ME NOW</li>
-                    <li>40. I FEEL LIKE A WOMAN</li>
-                    <li>41. I LOOK TO YOU</li>
-                    <li>42. I LOVE ROCK AND ROLL</li>
-                    <li>43. I JUST WANNA STOP</li>
-                    <li>44. I'M NOT IN LOVE</li>
-                    <li>45. IMAGINE</li>
-                    <li>46. IN THE MOOD</li>
-                    <li>47. IS THIS LOVE</li>
-                    <li>48. IT AINT OVER TIL ITS OVER</li>
-                    <li>49. ITS MY LIFE</li>
-                    <li>50. JUMP</li>
-                    <li>51. KEANE EVERYBODY</li>
-                    <li>52. KILLING ME SOFTLY</li>
-                    <li>53. LA GRANGE</li>
-                    <li>54. LAST DAY OF SUMMER</li>
-                    <li>55. LISTEN</li>
-                    <li>56. LIVE AND LET DIE</li>
-                    <li>57. LIVE IS LIFE</li>
-                    <li>58. LOVE ME TWO TIMES</li>
-                    <li>59. MARGARITAVILLE</li>
-                    <li>60. MAYBE TOMORROW</li>
-                    <li>61. MEDLEY 70'S</li>
-                    <li>62. MEDLEY W HOUSTON</li>
-                    <li>63. MORE THAN WORDS</li>
-                    <li>64. MOVE OVER</li>
-                    <li>65. MY WAY</li>
-                    <li>66. NEW KID IN TOWN</li>
-                    <li>67. NEW YORK NEW YORK</li>
-                    <li>68. NEW SENSATION</li>
-                    <li>69. NOTHING'S GONNA STOP US NOW</li>
-                    <li>70. OWNER OF A LONELY HEART</li>
-                    <li>71. PRETTY WOMAN</li>
-                    <li>72. PRIDE (IN THE NAME OF LOVE)</li>
-                    <li>73. QUEEN MEDLEY</li>
-                    <li>74. REASONS</li>
-                    <li>75. ROCK & ROLL</li>
-                    <li>76. ROSANNA</li>
-                    <li>77. SATISFACTION</li>
-                    <li>78. SELENA DISCO 70'S</li>
-                    <li>79. SEX ON FIRE</li>
-                    <li>80. SMELLS LIKE TEEN SPIRIT</li>
-                    <li>81. SMOKE ON THE WATER</li>
-                    <li>82. SOMETHING</li>
-                    <li>83. STAIRWAY TO HEAVEN</li>
-                    <li>84. SUMMER OF SIXTY NINE</li>
-                    <li>85. SUSPICIOUS MINDS</li>
-                    <li>86. SWAY</li>
-                    <li>87. SWEAT A LALALALA LONG</li>
-                    <li>88. SWEET CAROLINE</li>
-                    <li>89. SWEET CHILD OF MINE</li>
-                    <li>90. SWEET HOME ALABAMA</li>
-                    <li>91. THAT'S WHAT I LIKE</li>
-                    <li>92. TEARS IN HEAVEN</li>
-                    <li>93. THANK YOU</li>
-                    <li>94. THE FINAL COUNTDOWN</li>
-                    <li>95. THE JOKER</li>
-                    <li>96. THE LADY IS A TRAMP</li>
-                    <li>97. THE REASON</li>
-                    <li>98. THE X SONG</li>
-                    <li>99. THIS LOVE</li>
-                    <li>100. TREASURE</li>
-                    <li>101. TIME AFTER TIME</li>
-                    <li>102. TITANIC</li>
-                    <li>103. UNFORGETTABLE</li>
-                    <li>104. UPTOWN FUNK</li>
-                    <li>105. VEHICLE</li>
-                    <li>106. WHERE THE STREETS HAVE NO NAME</li>
-                    <li>107. WITH OR WITHOUT YOU</li>
-                    <li>108. WITHOUT YOU</li>
-                    <li>109. YELLOW</li>
-                    <li>110. YOU SHOULD BE DANCING</li>
-                    <li>111. YOU'VE GOT A FRIEND</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const openModalBtn = document.getElementById('openModalBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const modalOverlay = document.getElementById('modalOverlay');
-
-        // Función para abrir la ventana
-        openModalBtn.addEventListener('click', () => {
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden'; /* Evita scroll en la página de fondo */
-        });
-
-        // Función para cerrar la ventana
-        closeModalBtn.addEventListener('click', () => {
-            modalOverlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-
-        // Cerrar también si hacen clic fuera de la caja negra de la lista
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) {
-                modalOverlay.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-    </script>
-
-    <footer>
-        <p>&copy; 2026 Boutique Create Studio. Todos los derechos reservados
+                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE WALL</li><li>5. ANOTHER DAY IN PARADISE</li><li>6. BABY COME BACK</li><li>7. BACK IN BLACK</li><li>8. BILLIE JEAN</li><li>9. BLACK ORPHEUS</li><li>10. BLACK VELVET</li><li>11. BODY AND SOUL</li><li>12. BREATHLESS</li><li>13. CLOSE TO YOU</li><li>14. COCAINE</li><li>15. COME TOGETHER</li><li>16. COMFORTABLY NUMB</li><li>17. COSMIC GIRL</li><li>18. CRAZY LITTLE THING CALLED LOVE</li><li>19. CREEP</li><li>20. DANCE MONKEY</li><li>21. DUA LIPA MEDLEY</li><li>22. ENGLISHMAN IN NEW YORK</li><li>23. ENTER SANDMAN</li><li>24. EUROPE</li><li>25. EVERY BREATH YOU TAKE</li><li>26. EVERYTIME YOU GO AWAY</li><li>27. EVERYBODY WANTS TO RULE THE WORLD</li><li>28. EVERYTHING</li><li>29. EYE IN THE SKY</li><li>30. FANTASY</li><li>31. HARD TO SAY I'M SORRY</li><li>32. HAVE YOU EVER SEEN THE RAIN</li><li>33. HERE WE ARE</li><li>34. HOLD THE LINE</li><li>35. HOPELESSLY DEVOTED TO YOU</li><li>36. HOTEL CALIFORNIA</li><li>37. HOW DEEP IS YOUR LOVE</li><li>38. IF I AIN'T GOT YOU</li><li>39. IF YOU LEAVE ME NOW</li><li>40. I FEEL LIKE A WOMAN</li><li>41. I LOOK TO YOU</li><li>42. I LOVE ROCK AND ROLL</li><li>43. I JUST WANNA STOP</li><li>44. I'M NOT IN LOVE</li><li>45. IMAGINE</li><li>46. IN THE MOOD</li><li>47. IS THIS LOVE</li><li>48. IT AINT OVER TIL ITS OVER</li><li>49. ITS MY LIFE</li><li>50. JUMP</li><li>51. KEANE EVERYBODY</li><li>52. KILLING ME SOFTLY</li><li>53. LA GRANGE</li><li>54. LAST
