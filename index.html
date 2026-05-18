@@ -6,115 +6,152 @@
     <title>Mega Pack de Secuencias Musicales</title>
     <style>
         :root {
-            --primary: #6366f1; 
-            --primary-hover: #4f46e5;
-            --dark: #0f172a; 
-            --card-bg: #1e293b;
-            --text: #f8fafc;
-            --warning: #f59e0b;
-            --accent: #10b981;
+            --bg-main: #121314;      /* Fondo de estudio ultra oscuro */
+            --bg-card: #1a1c1e;      /* Gris consola profesional */
+            --border-color: #2a2e33; /* Bordes sutiles tipo rack */
+            --text-main: #f1f5f9;     /* Blanco suave */
+            --text-muted: #8a94a0;    /* Gris atenuado para descripciones */
+            --accent: #00fff0;        /* Azul cyan tipo pantalla de sintetizador */
+            --accent-hover: #00d8cc;
+            --success: #10b981;      /* Verde indicador LED */
+            --warning: #ffb703;      /* Naranja de advertencia */
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--dark);
-            color: var(--text);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
             text-align: center;
         }
 
         header {
-            padding: 80px 20px;
-            background: linear-gradient(135deg, #1e1b4b, #0f172a);
-            border-bottom: 1px solid #334155;
+            padding: 90px 20px 60px 20px;
+            background: radial-gradient(circle at top, #1e222b 0%, #121314 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Contenedor de la Onda de Audio (Estilo Waves) */
+        .wave-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            opacity: 0.85;
+        }
+
+        .wave-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 240, 0.3));
         }
 
         header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
+            font-size: 2.6rem;
+            margin-bottom: 12px;
             color: #ffffff;
-            letter-spacing: -1px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
         }
 
         header p {
-            font-size: 1.3rem;
-            color: #94a3b8;
+            font-size: 1.2rem;
+            color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto;
         }
 
         .container {
-            max-width: 800px;
-            margin: 50px auto;
+            max-width: 750px;
+            margin: 20px auto 60px auto;
             padding: 0 20px;
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3), 0 8px 10px -6px rgba(0,0,0,0.3);
-            border: 1px solid #334155;
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 45px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
             text-align: left;
         }
 
         .card h3 {
             margin-top: 0;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #ffffff;
             text-align: center;
+            font-weight: 600;
         }
 
         .description {
-            color: #94a3b8;
-            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
             line-height: 1.6;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
-            margin: 25px 0;
-            font-size: 1.1rem;
+            margin: 30px 0;
+            font-size: 1.05rem;
         }
 
         .features-list li {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .features-list .check {
-            color: var(--accent);
+            color: var(--success);
             font-weight: bold;
+        }
+
+        .audio-section {
+            background: #121314;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 25px 0;
         }
 
         audio {
             width: 100%;
-            margin: 20px 0;
-            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .price-box {
+            text-align: center;
+            margin: 35px 0 15px 0;
         }
 
         .price {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
             color: #ffffff;
-            margin: 30px 0 10px 0;
-            text-align: center;
+        }
+
+        .currency {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-left: 5px;
         }
 
         .warning-box {
-            background-color: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--warning);
-            color: #fcd34d;
+            background-color: rgba(255, 183, 3, 0.06);
+            border: 1px solid rgba(255, 183, 3, 0.4);
+            color: #ffe194;
             padding: 15px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            margin: 15px auto 25px auto;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin: 20px auto 30px auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -128,40 +165,50 @@
 
         .btn-buy {
             display: inline-block;
-            background-color: var(--primary);
-            color: white;
+            background-color: var(--accent);
+            color: #0f172a;
             text-decoration: none;
-            padding: 18px 40px;
-            border-radius: 30px;
+            padding: 18px 45px;
+            border-radius: 6px; /* Bordes más rectos estilo equipo de rack */
             font-weight: bold;
             font-size: 1.2rem;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-            width: 80%;
-            max-width: 400px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 240, 0.2);
+            width: 85%;
+            max-width: 380px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-buy:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 255, 240, 0.3);
         }
 
         footer {
-            margin-top: 100px;
-            padding: 30px;
-            background-color: #020617;
-            font-size: 0.9rem;
-            color: #475569;
-            border-top: 1px solid #1e293b;
+            margin-top: 80px;
+            padding: 40px 20px;
+            background-color: #090a0a;
+            font-size: 0.85rem;
+            color: #525960;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
 
     <header>
+        <!-- Gráfico de Onda de Audio -->
+        <div class="wave-container">
+            <svg class="wave-image" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 0,40 Q 15,10 30,40 T 60,40 T 90,40 T 120,40 T 150,40 T 180,40 T 210,15 T 240,65 T 270,5 T 300,75 T 330,20 T 360,60 T 390,35 T 420,45 T 450,40 T 480,40 T 510,40 T 540,40 T 570,40 T 600,40" fill="none" stroke="#00fff0" stroke-width="3" stroke-linecap="round"/>
+                <path d="M 0,40 Q 15,25 30,40 T 60,40 T 90,40 T 120,40 T 150,40 T 180,30 T 210,20 T 240,55 T 270,15 T 300,65 T 330,25 T 360,50 T 390,40 T 420,40 T 450,40 T 480,40 T 510,40 T 540,40 T 570,40 T 600,40" fill="none" stroke="#00fff0" stroke-width="1.5" opacity="0.4" stroke-linecap="round"/>
+            </svg>
+        </div>
+        
         <h1>Librería de Secuencias Profesionales</h1>
-        <p>El recurso definitivo para sonar como un disco en tus presentaciones en vivo.</p>
+        <p>Estudio de grabación digital. Multi-tracks de alta fidelidad listos para tus shows en vivo.</p>
     </header>
 
     <div class="container">
@@ -169,46 +216,47 @@
         <div class="card">
             <h3>Mega Pack: 110 Canciones Completas</h3>
             <p class="description">
-                Lleva el control total de tu show. Tracks de alta calidad diseñados especialmente para bandas, bateristas y directores musicales.
+                Control absoluto sobre el escenario. Mezclas precisas estructuradas de forma nativa para operadores, bateristas y directores musicales.
             </p>
 
-            <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
 
-            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #ffffff;">¿Qué incluye cada canción?</p>
+            <p style="font-weight: 600; font-size: 1.15rem; margin-bottom: 15px; color: #ffffff; letter-spacing: 0.3px;">ESTRUCTURA DE CADA TRACK:</p>
             <ul class="features-list">
-                <li><span class="check">✓</span> <strong>Bass Track:</strong> Canal independiente para el bajo eléctrico o sintético.</li>
-                <li><span class="check">✓</span> <strong>Stereo Instrument Track:</strong> Todos los instrumentos adicionales (guitarras, teclados, sintentizadores, metales) mezclados en estéreo, SIN batería.</li>
-                <li><span class="check">✓</span> <strong>Click Track:</strong> Metrónomo perfectamente sincronizado para que tu banda vaya a tiempo.</li>
+                <li><span class="check">✓</span> <strong>Bass Track:</strong> Línea independiente dedicada para el bajo (eléctrico/sintetizador).</li>
+                <li><span class="check">✓</span> <strong>Stereo Instrument Track:</strong> Mezcla estéreo limpia con todos los elementos armónicos (guitarras, teclados, brasses) EXCEPTO la batería acústica.</li>
+                <li><span class="check">✓</span> <strong>Click Track:</strong> Guía de metrónomo con claqueta estricta para sincronizar a toda la banda en tiempo real.</li>
             </ul>
 
-            <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
-            
-            <!-- REPRODUCTOR DE DEMO -->
-            <p style="margin-bottom: 5px; color: #94a3b8; font-size: 0.9rem; text-align: center;">Escucha una muestra del contenido:</p>
-            <audio controls controlsList="nodownload">
-                <source src="audio/demo.mp3" type="audio/mpeg">
-                Tu navegador no soporta el reproductor de audio.
-            </audio>
+            <div class="audio-section">
+                <p style="margin: 0 0 8px 0; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">MONITOR DE MUESTRA (DEMO):</p>
+                <audio controls controlsList="nodownload">
+                    <source src="audio/demo.mp3" type="audio/mpeg">
+                    Tu navegador no soporta el monitor de audio.
+                </audio>
+            </div>
 
-            <!-- PRECIO (Ajustado dinámicamente según la configuración de tu Stripe) -->
-            <div class="price">$49.00 USD</div>
+            <!-- PRECIO MODIFICADO -->
+            <div class="price-box">
+                <span class="price">$1,699</span><span class="currency">MXN</span>
+            </div>
 
             <!-- ADVERTENCIA DE PESO -->
             <div class="warning-box">
                 <span>⚠️</span>
-                <span><strong>Aviso importante:</strong> La descarga consta de un archivo comprimido de <strong>16 GB</strong> hospedado en MEGA. Asegúrate de contar con espacio en disco y una buena conexión antes de iniciar.</span>
+                <span><strong>Especificación técnica:</strong> El paquete consta de <strong>16 GB</strong> alojados de manera segura en un contenedor cifrado de MEGA. Verifique su almacenamiento local antes de proceder.</span>
             </div>
 
-            <!-- BOTÓN DE COMPRA CON TU LINK REAL DE STRIPE -->
+            <!-- BOTÓN DE COMPRA CON TU LINK DE STRIPE -->
             <div class="btn-container">
-                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-buy">Comprar y Descargar Ahora</a>
+                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-buy">Adquirir Licencia</a>
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 Tu Marca Musical. Todos los derechos reservados.</p>
+        <p>&copy; 2026 Boutique Create Studio. Todos los derechos reservados.</p>
     </footer>
 
 </body>
