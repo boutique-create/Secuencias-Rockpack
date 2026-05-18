@@ -83,7 +83,6 @@
             margin: 0 0 30px 0;
         }
 
-        /* EXPLICACIÓN DEL PAQUETE REQUERIDA */
         .pack-explanation {
             background-color: rgba(0, 0, 0, 0.2);
             border: 1px solid #343a40;
@@ -344,7 +343,7 @@
                 <ul>
                     <li><strong>Bass Track:</strong> El bajo por separado para refuerzo en sala o monitores.</li>
                     <li><strong>Click Track:</strong> Guía de metrónomo estricta para mantener a la banda sincronizada.</li>
-                    <li><strong>Instrumental Mix:</strong> La base musical completa libre de elementos rítmicos y melódicos redundantes.</li>
+                    <li><strong>Instrumental Mix:</strong> La base musical completa libre de Batería y Voz principal.</li>
                 </ul>
             </div>
 
@@ -375,18 +374,18 @@
                 </tbody>
             </table>
 
-            <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
+            <button class="btn-modal-trigger" id="openModalBtn" onclick="toggleModal(true)">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
                 <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
                 <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
                 
                 <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR TODOS</button>
+                    <button class="btn-master" id="dawMasterPlay" onclick="handleMasterPlay()">▶ REPRODUCIR TODOS</button>
                     
                     <div class="timeline-container">
                         <span id="currentTimeLabel">0:00</span>
-                        <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
+                        <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0" oninput="handleProgressBar(this.value)">
                         <span id="totalTimeLabel">0:00</span>
                     </div>
                 </div>
@@ -399,12 +398,12 @@
                     <div class="channel-controls-group">
                         <div class="pan-container">
                             <span>L</span>
-                            <input type="range" class="pan-slider" data-channel="stereo" min="-1" max="1" step="0.1" value="0">
+                            <input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0" oninput="handlePan('stereo', this.value)">
                             <span>R</span>
                         </div>
                         <div class="channel-buttons">
-                            <button class="btn-daw btn-mute" data-channel="stereo">M</button>
-                            <button class="btn-daw btn-solo" data-channel="stereo">S</button>
+                            <button class="btn-daw" id="mute-stereo" onclick="toggleMute('stereo')">M</button>
+                            <button class="btn-daw" id="solo-stereo" onclick="toggleSolo('stereo')">S</button>
                         </div>
                     </div>
                 </div>
@@ -417,12 +416,12 @@
                     <div class="channel-controls-group">
                         <div class="pan-container">
                             <span>L</span>
-                            <input type="range" class="pan-slider" data-channel="bass" min="-1" max="1" step="0.1" value="0">
+                            <input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0" oninput="handlePan('bass', this.value)">
                             <span>R</span>
                         </div>
                         <div class="channel-buttons">
-                            <button class="btn-daw btn-mute" data-channel="bass">M</button>
-                            <button class="btn-daw btn-solo" data-channel="bass">S</button>
+                            <button class="btn-daw" id="mute-bass" onclick="toggleMute('bass')">M</button>
+                            <button class="btn-daw" id="solo-bass" onclick="toggleSolo('bass')">S</button>
                         </div>
                     </div>
                 </div>
@@ -435,12 +434,12 @@
                     <div class="channel-controls-group">
                         <div class="pan-container">
                             <span>L</span>
-                            <input type="range" class="pan-slider" data-channel="click" min="-1" max="1" step="0.1" value="0">
+                            <input type="range" class="pan-slider" min="-1" max="1" step="0.1" value="0" oninput="handlePan('click', this.value)">
                             <span>R</span>
                         </div>
                         <div class="channel-buttons">
-                            <button class="btn-daw btn-mute" data-channel="click">M</button>
-                            <button class="btn-daw btn-solo" data-channel="click">S</button>
+                            <button class="btn-daw" id="mute-click" onclick="toggleMute('click')">M</button>
+                            <button class="btn-daw" id="solo-click" onclick="toggleSolo('click')">S</button>
                         </div>
                     </div>
                 </div>
@@ -462,12 +461,7 @@
         </div>
     </main>
 
-    <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-overlay" id="modalOverlay" onclick="if(event.target === this) toggleModal(false)">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <ul class="songs-grid">
-                    <li>1. A THOUS
+                <h3>Contenido de
