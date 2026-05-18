@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique-Create | Secuencias Musicales</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>eruda.init();</script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
     <style>
         :root {
@@ -330,60 +334,19 @@
                 <circle cx="88" cy="42" r="4" fill="#f39c12" opacity="0.8"/>
             </svg>
         </div>
-        <h1 class="brand-name">Boutique-Create</h1>
+        <h1 class="brand-name">Boutique-Create TEST CONSOLE</h1>
     </header>
 
     <main class="main-content">
         <div class="console-card">
             <h2>Mega Pack de Secuencias Musicales</h2>
-            <p class="subtitle">Multi tracks de secuencias musicales profesionales para requerimientos y optimizaciones de tus shows en vivo.</p>
-
-            <div class="pack-explanation">
-                <p><strong>¿Qué incluye este paquete profesional?</strong></p>
-                <p>Recibirás acceso completo a un catálogo selecto de <strong>110 canciones icónicas</strong>. Cada una de ellas viene perfectamente dividida en su estructura nativa de <strong>3 tracks independientes</strong>, permitiéndote un control total sobre la mezcla de tu show en vivo:</p>
-                <ul>
-                    <li><strong>Bass Track:</strong> El bajo por separado para refuerzo en sala o monitores.</li>
-                    <li><strong>Click Track:</strong> Guía de metrónomo estricta para mantener a la banda sincronizada.</li>
-                    <li><strong>Instrumental Mix:</strong> La base musical completa libre de Batería y Voz principal.</li>
-                </ul>
-            </div>
-
-            <table class="track-table">
-                <thead>
-                    <tr>
-                        <th>Estructura Multi-Track</th>
-                        <th>Descripción</th>
-                        <th style="text-align: right;">Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="track-name">Bass Track</td>
-                        <td class="track-desc">Canal de bajo eléctrico o sintético directo por separado.</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                    <tr>
-                        <td class="track-name">Stereo Instrument Track</td>
-                        <td class="track-desc">Mezcla estéreo completa de instrumentación (Sin batería y sin voz).</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                    <tr>
-                        <td class="track-name">Click Track</td>
-                        <td class="track-desc">Guía de metrónomo estricta para sincronización en directo.</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                </tbody>
-            </table>
+            <p class="subtitle">Multi tracks de secuencias musicales profesionales.</p>
 
             <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
-                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
-                <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
-                
                 <div class="daw-master-controls">
                     <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR TODOS</button>
-                    
                     <div class="timeline-container">
                         <span id="currentTimeLabel">0:00</span>
                         <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
@@ -392,72 +355,31 @@
                 </div>
 
                 <div class="daw-channel ch-stereo">
-                    <div class="channel-info">
-                        <p class="channel-name">Stereo Instruments</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
+                    <div class="channel-info"><p class="channel-name">Stereo Instruments</p></div>
                     <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" class="pan-slider" id="pan-stereo" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-stereo">M</button>
-                            <button class="btn-daw" id="solo-stereo">S</button>
-                        </div>
+                        <input type="range" class="pan-slider" id="pan-stereo" min="-1" max="1" step="0.1" value="0">
+                        <button class="btn-daw" id="mute-stereo">M</button>
+                        <button class="btn-daw" id="solo-stereo">S</button>
                     </div>
                 </div>
 
                 <div class="daw-channel ch-bass">
-                    <div class="channel-info">
-                        <p class="channel-name">Bass Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
+                    <div class="channel-info"><p class="channel-name">Bass Track</p></div>
                     <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" class="pan-slider" id="pan-bass" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-bass">M</button>
-                            <button class="btn-daw" id="solo-bass">S</button>
-                        </div>
+                        <input type="range" class="pan-slider" id="pan-bass" min="-1" max="1" step="0.1" value="0">
+                        <button class="btn-daw" id="mute-bass">M</button>
+                        <button class="btn-daw" id="solo-bass">S</button>
                     </div>
                 </div>
 
                 <div class="daw-channel ch-click">
-                    <div class="channel-info">
-                        <p class="channel-name">Click Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
+                    <div class="channel-info"><p class="channel-name">Click Track</p></div>
                     <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" class="pan-slider" id="pan-click" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-click">M</button>
-                            <button class="btn-daw" id="solo-click">S</button>
-                        </div>
+                        <input type="range" class="pan-slider" id="pan-click" min="-1" max="1" step="0.1" value="0">
+                        <button class="btn-daw" id="mute-click">M</button>
+                        <button class="btn-daw" id="solo-click">S</button>
                     </div>
                 </div>
-            </div>
-
-            <div class="price-container">
-                <span class="price-label">Precio Único:</span>
-                <span class="price-value">$1,699 MXN</span>
-            </div>
-
-            <div class="tech-spec-box">
-                <span class="badge">16GB MEGA</span>
-                <p>La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA.</p>
-            </div>
-
-            <div class="action-container">
-                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Licencia</a>
             </div>
         </div>
     </main>
@@ -465,9 +387,56 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
+                <h3>Contenido (110 Canciones)</h3>
                 <button class="modal-close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
-                <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. A
+                <ul class="songs-grid"><li>1. A THOUSAND YEARS</li><li>2. AFRICA</li><li>3. BILLIE JEAN</li></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        console.log("Iniciando carga de tracks con Howler...");
+
+        const tracks = {
+            stereo: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/synth.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Stereo:", err) }),
+            bass: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/bass.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Bass:", err) }),
+            click: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/drums.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Click:", err) })
+        };
+
+        let isPlaying = false;
+        let activeSoloChannel = null;
+        let channelStates = { stereo: { muted: false }, bass: { muted: false }, click: { muted: false } };
+
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const masterPlayBtn = document.getElementById('dawMasterPlay');
+
+        openModalBtn.addEventListener('click', () => {
+            console.log("Clic en abrir modal detectado");
+            modalOverlay.classList.add('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
+
+        masterPlayBtn.addEventListener('click', () => {
+            console.log("Clic en Play Master detectado. Estado actual isPlaying =", isPlaying);
+            try {
+                if (!isPlaying) {
+                    Object.keys(tracks).forEach(ch => tracks[ch].play());
+                    masterPlayBtn.textContent = "⏸ PAUSAR";
+                    isPlaying = true;
+                } else {
+                    Object.keys(tracks).forEach(ch => tracks[ch].pause());
+                    masterPlayBtn.textContent = "▶ REPRODUCIR";
+                    isPlaying = false;
+                }
+            } catch(e) {
+                console.error("Fallo crítico en reproducción:", e);
+            }
+        });
+    </script>
+</body>
+</html>
