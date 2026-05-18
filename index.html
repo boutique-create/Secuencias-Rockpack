@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Pack de Secuencias Musicales</title>
+    <style>
+        :root {
+            --primary: #6366f1; 
+            --primary-hover: #4f46e5;
+            --dark: #0f172a; 
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --warning: #f59e0b;
+            --accent: #10b981;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1e1b4b, #0f172a);
+            border-bottom: 1px solid #334155;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3), 0 8px 10px -6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            text-align: left;
+        }
+
+        .card h3 {
+            margin-top: 0;
+            font-size: 2rem;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .description {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            font-size: 1.1rem;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .features-list .check {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        audio {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 30px 0 10px 0;
+            text-align: center;
+        }
+
+        .warning-box {
+            background-color: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--warning);
+            color: #fcd34d;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin: 15px auto 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        .btn-buy {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        footer {
+            margin-top: 100px;
+            padding: 30px;
+            background-color: #020617;
+            font-size: 0.9rem;
+            color: #475569;
+            border-top: 1px solid #1e293b;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Librería de Secuencias Profesionales</h1>
+        <p>El recurso definitivo para sonar como un disco en tus presentaciones en vivo.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="card">
+            <h3>Mega Pack: 110 Canciones Completas</h3>
+            <p class="description">
+                Lleva el control total de tu show. Tracks de alta calidad diseñados especialmente para bandas, bateristas y directores musicales.
+            </p>
+
+            <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
+
+            <p style="font-weight: bold; font-size: 1.2rem; margin-bottom: 10px; color: #ffffff;">¿Qué incluye cada canción?</p>
+            <ul class="features-list">
+                <li><span class="check">✓</span> <strong>Bass Track:</strong> Canal independiente para el bajo eléctrico o sintético.</li>
+                <li><span class="check">✓</span> <strong>Stereo Instrument Track:</strong> Todos los instrumentos adicionales (guitarras, teclados, sintentizadores, metales) mezclados en estéreo, SIN batería.</li>
+                <li><span class="check">✓</span> <strong>Click Track:</strong> Metrónomo perfectamente sincronizado para que tu banda vaya a tiempo.</li>
+            </ul>
+
+            <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
+            
+            <!-- REPRODUCTOR DE DEMO -->
+            <p style="margin-bottom: 5px; color: #94a3b8; font-size: 0.9rem; text-align: center;">Escucha una muestra del contenido:</p>
+            <audio controls controlsList="nodownload">
+                <source src="audio/demo.mp3" type="audio/mpeg">
+                Tu navegador no soporta el reproductor de audio.
+            </audio>
+
+            <!-- PRECIO (Ajustado dinámicamente según la configuración de tu Stripe) -->
+            <div class="price">$49.00 USD</div>
+
+            <!-- ADVERTENCIA DE PESO -->
+            <div class="warning-box">
+                <span>⚠️</span>
+                <span><strong>Aviso importante:</strong> La descarga consta de un archivo comprimido de <strong>16 GB</strong> hospedado en MEGA. Asegúrate de contar con espacio en disco y una buena conexión antes de iniciar.</span>
+            </div>
+
+            <!-- BOTÓN DE COMPRA CON TU LINK REAL DE STRIPE -->
+            <div class="btn-container">
+                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-buy">Comprar y Descargar Ahora</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Tu Marca Musical. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>
