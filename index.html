@@ -9,6 +9,7 @@
     <script>eruda.init();</script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    
     <style>
         :root {
             --bg-light: #f3f4f6;       
@@ -108,10 +109,6 @@
             color: var(--text-muted);
         }
 
-        .pack-explanation ul li {
-            margin-bottom: 5px;
-        }
-
         .track-table {
             width: 100%;
             border-collapse: collapse;
@@ -143,13 +140,15 @@
             background: none;
             border: 1px solid #495057;
             color: var(--text-muted);
-            padding: 10px 20px;
+            padding: 15px 20px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
             margin: 0 auto 30px auto;
             transition: all 0.2s;
+            width: 100%;
+            max-width: 400px;
         }
 
         .btn-modal-trigger:hover {
@@ -195,16 +194,16 @@
             background-color: #343a40;
             border: 1px solid #495057;
             color: white;
-            padding: 10px 28px;
+            padding: 12px 30px;
             font-weight: bold;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             transition: all 0.2s;
+            width: 100%;
+            max-width: 250px;
             margin-bottom: 15px;
         }
-        .btn-master:hover { background-color: #495057; }
-        .btn-master.playing { background-color: var(--success-green); border-color: #1ea867; }
 
         .timeline-container {
             display: flex;
@@ -224,25 +223,6 @@
             background: #2a2e33;
             border-radius: 3px;
             outline: none;
-            cursor: pointer;
-        }
-
-        .progress-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--cyan-led);
-            cursor: pointer;
-        }
-
-        .progress-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--cyan-led);
-            cursor: pointer;
-            border: none;
         }
 
         .daw-channel {
@@ -271,20 +251,12 @@
         @media (min-width: 520px) { .channel-info { margin-bottom: 0; } }
 
         .channel-name { font-size: 0.9rem; font-weight: bold; margin: 0; }
-        .channel-track-title { font-size: 0.75rem; color: var(--text-muted); margin: 2px 0 0 0; }
 
-        .channel-controls-group { display: flex; align-items: center; gap: 20px; justify-content: space-between; }
+        .channel-controls-group { display: flex; align-items: center; gap: 15px; justify-content: space-between; }
 
-        .pan-container { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
-        .pan-slider { -webkit-appearance: none; width: 80px; height: 4px; background: #343a40; border-radius: 2px; outline: none; }
-        .pan-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--cyan-led); cursor: pointer; }
-        .pan-slider::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--cyan-led); cursor: pointer; }
+        .pan-slider { -webkit-appearance: none; width: 70px; height: 4px; background: #343a40; border-radius: 2px; outline: none; }
 
-        .channel-buttons { display: flex; gap: 6px; }
-        .btn-daw { width: 36px; height: 32px; border: 1px solid #495057; background-color: #2a2e33; color: var(--text-muted); font-weight: bold; font-size: 0.8rem; border-radius: 4px; cursor: pointer; }
-
-        .btn-daw.mute-active { background-color: var(--danger-red); color: white; border-color: var(--danger-red); }
-        .btn-daw.solo-active { background-color: var(--warning); color: #000; border-color: var(--warning); }
+        .btn-daw { width: 38px; height: 34px; border: 1px solid #495057; background-color: #2a2e33; color: var(--text-muted); font-weight: bold; font-size: 0.85rem; border-radius: 4px; cursor: pointer; }
 
         /* PRECIOS Y ACCIONES */
         .price-container { text-align: center; margin: 30px 0 25px 0; }
@@ -297,7 +269,6 @@
 
         .action-container { width: 100%; text-align: center; }
         .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
-        .btn-acquire:hover { background-color: var(--cyan-led-hover); transform: scale(1.02); }
 
         /* MODAL */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
@@ -309,9 +280,7 @@
         .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
         .songs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; margin: 0; list-style: none; }
         @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
-        .songs-grid li { font-size: 0.9rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #6c757d; }
+        .songs-grid li { font-size: 0.9rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; }
     </style>
 </head>
 <body>
@@ -319,22 +288,14 @@
     <header class="brand-header">
         <div class="logo-container">
             <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#f39c12" />
-                        <stop offset="50%" stop-color="#d35400" />
-                        <stop offset="100%" stop-color="#9b59b6" />
-                    </linearGradient>
-                </defs>
                 <rect x="20" y="38" width="8" height="24" rx="4" fill="#9b59b6" opacity="0.7"/>
                 <rect x="33" y="28" width="8" height="44" rx="4" fill="#9b59b6" />
-                <rect x="46" y="15" width="8" height="70" rx="4" fill="url(#waveGradient)" />
+                <rect x="46" y="15" width="8" height="70" rx="4" fill="#d35400" />
                 <rect x="59" y="22" width="8" height="40" rx="4" fill="#f39c12" />
                 <rect x="72" y="33" width="8" height="34" rx="4" fill="#f39c12" opacity="0.7"/>
-                <circle cx="88" cy="42" r="4" fill="#f39c12" opacity="0.8"/>
             </svg>
         </div>
-        <h1 class="brand-name">Boutique-Create TEST CONSOLE</h1>
+        <h1 class="brand-name">Boutique-Create</h1>
     </header>
 
     <main class="main-content">
@@ -342,11 +303,19 @@
             <h2>Mega Pack de Secuencias Musicales</h2>
             <p class="subtitle">Multi tracks de secuencias musicales profesionales.</p>
 
+            <div class="pack-explanation">
+                <p><strong>¿Qué incluye este paquete profesional?</strong></p>
+                <p>Acceso completo a un catálogo selecto de <strong>110 canciones icónicas</strong> divididas en 3 tracks independientes.</p>
+            </div>
+
             <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
+                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
+                <p class="daw-subtitle">Líneas de audio seguras ejecutándose vía Web Audio API móvil.</p>
+                
                 <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR TODOS</button>
+                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR</button>
                     <div class="timeline-container">
                         <span id="currentTimeLabel">0:00</span>
                         <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
@@ -381,28 +350,58 @@
                     </div>
                 </div>
             </div>
+
+            <div class="price-container">
+                <span class="price-label">Precio Único:</span>
+                <span class="price-value">$1,699 MXN</span>
+            </div>
+
+            <div class="action-container">
+                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Licencia</a>
+            </div>
         </div>
     </main>
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>Contenido (110 Canciones)</h3>
+                <h3>Contenido del Paquete (110 Canciones)</h3>
                 <button class="modal-close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
-                <ul class="songs-grid"><li>1. A THOUSAND YEARS</li><li>2. AFRICA</li><li>3. BILLIE JEAN</li></ul>
+                <ul class="songs-grid">
+                    <li>1. A THOUSAND YEARS</li><li>2. AFRICA</li><li>3. BILLIE JEAN</li><li>4. HOTEL CALIFORNIA</li><li>5. CREEP</li><li>6. BACK IN BLACK</li><li>7. JUMP</li><li>8. ROXANNE</li><li>9. YELLOW</li><li>10. STAYIN ALIVE</li>
+                </ul>
             </div>
         </div>
     </div>
 
     <script>
-        console.log("Iniciando carga de tracks con Howler...");
+        console.log("Iniciando carga de tracks con Howler optimizado...");
 
+        // Enlaces de audio en servidores CDN libres de bloqueos CORS
         const tracks = {
-            stereo: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/synth.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Stereo:", err) }),
-            bass: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/bass.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Bass:", err) }),
-            click: new Howl({ src: ['https://storage.googleapis.com/ikcb-portfolio/audio/drums.mp3'], html5: true, loop: true, onloaderror: (id, err) => console.error("Error Click:", err) })
+            stereo: new Howl({ 
+                src: ['https://actions.google.com/sounds/v1/ambiences/morning_birds.ogg'], 
+                html5: false, // Forzar Web Audio API para saltar restricciones del navegador móvil
+                loop: true, 
+                onload: () => console.log("Stereo cargado con éxito"),
+                onloaderror: (id, err) => console.error("Error Stereo:", err) 
+            }),
+            bass: new Howl({ 
+                src: ['https://actions.google.com/sounds/v1/ambiences/coffee_shop_atmosphere.ogg'], 
+                html5: false, 
+                loop: true, 
+                onload: () => console.log("Bass cargado con éxito"),
+                onloaderror: (id, err) => console.error("Error Bass:", err) 
+            }),
+            click: new Howl({ 
+                src: ['https://actions.google.com/sounds/v1/ambiences/rain_heavy_loud.ogg'], 
+                html5: false, 
+                loop: true, 
+                onload: () => console.log("Click cargado con éxito"),
+                onloaderror: (id, err) => console.error("Error Click:", err) 
+            })
         };
 
         let isPlaying = false;
@@ -414,6 +413,7 @@
         const modalOverlay = document.getElementById('modalOverlay');
         const masterPlayBtn = document.getElementById('dawMasterPlay');
 
+        // Eventos nativos del Modal aislados de bloqueos
         openModalBtn.addEventListener('click', () => {
             console.log("Clic en abrir modal detectado");
             modalOverlay.classList.add('active');
@@ -421,16 +421,25 @@
 
         closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
 
+        // Evento de reproducción máster con desbloqueo táctil para celular
         masterPlayBtn.addEventListener('click', () => {
             console.log("Clic en Play Master detectado. Estado actual isPlaying =", isPlaying);
+            
+            // Forzar activación del hardware de sonido del celular en interacción directa
+            if (Howler.ctx && Howler.ctx.state === 'suspended') {
+                Howler.ctx.resume().then(() => console.log("Contexto de audio desbloqueado en móvil"));
+            }
+
             try {
                 if (!isPlaying) {
                     Object.keys(tracks).forEach(ch => tracks[ch].play());
                     masterPlayBtn.textContent = "⏸ PAUSAR";
+                    masterPlayBtn.style.backgroundColor = "var(--success-green)";
                     isPlaying = true;
                 } else {
                     Object.keys(tracks).forEach(ch => tracks[ch].pause());
                     masterPlayBtn.textContent = "▶ REPRODUCIR";
+                    masterPlayBtn.style.backgroundColor = "#343a40";
                     isPlaying = false;
                 }
             } catch(e) {
