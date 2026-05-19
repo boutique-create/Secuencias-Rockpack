@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -472,4 +471,192 @@
             </div>
             <div class="modal-body">
                 <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN TH
+                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE WALL</li><li>5. ANOTHER DAY IN PARADISE</li><li>6. BABY COME BACK</li><li>7. BACK IN BLACK</li><li>8. BILLIE JEAN</li><li>9. BLACK ORPHEUS</li><li>10. BLACK VELVET</li><li>11. BODY AND SOUL</li><li>12. BREATHLESS</li><li>13. CLOSE TO YOU</li><li>14. COCAINE</li><li>15. COME TOGETHER</li><li>16. COMFORTABLY NUMB</li><li>17. COSMIC GIRL</li><li>18. CRAZY LITTLE THING CALLED LOVE</li><li>19. CREEP</li><li>20. DANCE MONKEY</li><li>21. DUA LIPA MEDLEY</li><li>22. ENGLISHMAN IN NEW YORK</li><li>23. ENTER SANDMAN</li><li>24. EUROPE</li><li>25. EVERY BREATH YOU TAKE</li><li>26. EVERYTIME YOU GO AWAY</li><li>27. EVERYBODY WANTS TO RULE THE WORLD</li><li>28. EVERYTHING</li><li>29. EYE IN THE SKY</li><li>30. FANTASY</li><li>31. HARD TO SAY IM SAVING</li><li>32. HAVE YOU EVER SEEN THE RAIN</li><li>33. HERE WE ARE</li><li>34. HOLD THE LINE</li><li>35. HOPELESSLY DEVOTED TO YOU</li><li>36. HOTEL CALIFORNIA</li><li>37. HOW DEEP IS YOUR LOVE</li><li>38. IF I AINT GOT YOU</li><li>39. IF YOU LEAVE ME NOW</li><li>40. I FEEL LIKE A WOMAN</li><li>41. I LOOK TO YOU</li><li>42. I LOVE ROCK AND ROLL</li><li>43. I JUST WANNA STOP</li><li>44. I M NOT IN LOVE</li><li>45. IMAGINE</li><li>46. IN THE MOOD</li><li>47. IS THIS LOVE</li><li>48. IT AINT OVER TIL ITS OVER</li><li>49. ITS MY LIFE</li><li>50. JUMP</li><li>51. KEANE EVERYBODY</li><li>52. KILLING ME SOFTLY</li><li>53. LA GRANGE</li><li>54. LAST DAY OF SUMMER</li><li>55. LISTEN</li><li>56. LIVE AND LET DIE</li><li>57. LIVE IS LIFE</li><li>58. LOVE ME TWO TIMES</li><li>59. MARGARITAVILLE</li><li>60. MAYBE TOMORROW</li><li>61. MEDLEY 70S</li><li>62. MEDLEY W HOUSTON</li><li>63. MORE THAN WORDS</li><li>64. MOVE OVER</li><li>65. MY WAY</li><li>66. NEW KID IN TOWN</li><li>67. NEW YORK NEW YORK</li><li>68. NEW SENSATION</li><li>69. NOTHINGS GONNA STOP US NOW</li><li>70. OWNER OF A LONELY HEART</li><li>71. PRETTY WOMAN</li><li>72. PRIDE IN THE NAME OF LOVE</li><li>73. QUEEN MEDLEY</li><li>74. REASONS</li><li>75. ROCK AND ROLL</li><li>76. ROSANNA</li><li>77. SATISFACTION</li><li>78. SELENA DISCO 70S</li><li>79. SEX ON FIRE</li><li>80. SMELLS LIKE TEEN SPIRIT</li><li>81. SMOKE ON THE WATER</li><li>82. SOMETHING</li><li>83. STAIRWAY TO HEAVEN</li><li>84. SUMMER OF SIXTY NINE</li><li>85. SUSPICIOUS MINDS</li><li>86. SWAY</li><li>87. SWEAT A LALALALA LONG</li><li>88. SWEET CAROLINE</li><li>89. SWEET CHILD OF MINE</li><li>90. SWEET HOME ALABAMA</li><li>91. THATS WHAT I LIKE</li><li>92. TEARS IN HEAVEN</li><li>93. THANK YOU</li><li>94. THE FINAL COUNTDOWN</li><li>95. THE JOKER</li><li>96. THE LADY IS A TRAMP</li><li>97. THE REASON</li><li>98. THE X SONG</li><li>100. TREASURE</li><li>101. TIME AFTER TIME</li><li>102. TITANIC</li><li>103. UNFORGETTABLE</li><li>104. UPTOWN FUNK</li><li>105. VEHICLE</li><li>106. WHERE THE STREETS HAVE NO NAME</li><li>107. WITH OR WITHOUT YOU</li><li>108. WITHOUT YOU</li><li>109. YELLOW</li><li>110. YOU SHOULD BE DANCING</li><li>111. YOU VE GOT A FRIEND</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Boutique-Create. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        const tracks = {
+            stereo: { audio: new Audio('audio/eye-stereo.mp3'), mute: false, solo: false, panValue: 0 },
+            bass: { audio: new Audio('audio/eye-bass.mp3'), mute: false, solo: false, panValue: 0 },
+            click: { audio: new Audio('audio/eye-click.mp3'), mute: false, solo: false, panValue: 0 }
+        };
+
+        Object.keys(tracks).forEach(key => {
+            tracks[key].audio.loop = true;
+            tracks[key].audio.preload = 'auto';
+            tracks[key].audio.crossOrigin = 'anonymous';
+        });
+
+        let isPlaying = false;
+        let isDragging = false;
+
+        const modalOverlay = document.getElementById('modalOverlay');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const masterPlayBtn = document.getElementById('dawMasterPlay');
+        const globalProgressBar = document.getElementById('globalProgressBar');
+        const currentTimeLabel = document.getElementById('currentTimeLabel');
+        const totalTimeLabel = document.getElementById('totalTimeLabel');
+
+        // FUNCIÓN CORREGIDA ASOCIADA DIRECTAMENTE AL EVENTO DE ESCUCHA DEL BOTÓN
+        openModalBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeModalBtn.addEventListener('click', function() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+                Object.keys(tracks).forEach(key => {
+                    const t = tracks[key];
+                    t.source = audioCtx.createMediaElementSource(t.audio);
+                    t.panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+                    t.gainNode = audioCtx.createGain();
+
+                    if (t.panner) {
+                        t.source.connect(t.panner);
+                        t.panner.connect(t.gainNode);
+                    } else {
+                        t.source.connect(t.gainNode);
+                    }
+                    t.gainNode.connect(audioCtx.destination);
+                });
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function formatTime(secs) {
+            if (isNaN(secs) || secs === Infinity) return "0:00";
+            let m = Math.floor(secs / 60);
+            let s = Math.floor(secs % 60);
+            return m + ":" + (s < 10 ? "0" + s : s);
+        }
+
+        tracks.stereo.audio.addEventListener('timeupdate', () => {
+            const seek = tracks.stereo.audio.currentTime || 0;
+            const duration = tracks.stereo.audio.duration || 0;
+            currentTimeLabel.textContent = formatTime(seek);
+            if (duration > 0) {
+                totalTimeLabel.textContent = formatTime(duration);
+                if (!isDragging) {
+                    globalProgressBar.value = (seek / duration) * 100;
+                }
+            }
+        });
+
+        globalProgressBar.addEventListener('mousedown', () => isDragging = true);
+        globalProgressBar.addEventListener('touchstart', () => isDragging = true);
+        globalProgressBar.addEventListener('input', (e) => {
+            const duration = tracks.stereo.audio.duration || 0;
+            if (duration === 0) return;
+            const targetTime = (e.target.value / 100) * duration;
+            Object.keys(tracks).forEach(key => tracks[key].audio.currentTime = targetTime);
+        });
+        globalProgressBar.addEventListener('change', () => isDragging = false);
+        globalProgressBar.addEventListener('touchend', () => isDragging = false);
+
+        masterPlayBtn.addEventListener('click', () => {
+            initAudioContext();
+            if (!isPlaying) {
+                Promise.all(Object.keys(tracks).map(key => tracks[key].audio.play()))
+                    .then(() => {
+                        masterPlayBtn.textContent = "⏸ PAUSAR TODOS";
+                        masterPlayBtn.classList.add('playing');
+                        isPlaying = true;
+                    })
+                    .catch(() => {
+                        Object.keys(tracks).forEach(key => tracks[key].audio.play());
+                        masterPlayBtn.textContent = "⏸ PAUSAR TODOS";
+                        masterPlayBtn.classList.add('playing');
+                        isPlaying = true;
+                    });
+            } else {
+                Object.keys(tracks).forEach(key => tracks[key].audio.pause());
+                masterPlayBtn.textContent = "▶ REPRODUCIR TODOS";
+                masterPlayBtn.classList.remove('playing');
+                isPlaying = false;
+            }
+        });
+
+        function updateMix() {
+            const anySolo = Object.keys(tracks).some(key => tracks[key].solo);
+            Object.keys(tracks).forEach(key => {
+                const t = tracks[key];
+                let shouldVolume = 1;
+
+                if (t.mute) {
+                    shouldVolume = 0;
+                } else if (anySolo && !t.solo) {
+                    shouldVolume = 0;
+                }
+
+                if (t.gainNode) {
+                    t.gainNode.gain.setValueAtTime(shouldVolume, audioCtx.currentTime);
+                } else {
+                    t.audio.muted = (shouldVolume === 0);
+                }
+            });
+        }
+
+        function toggleMute(key) {
+            tracks[key].mute = !tracks[key].mute;
+            document.getElementById(`mute-${key}`).classList.toggle('mute-active', tracks[key].mute);
+            updateMix();
+        }
+
+        function toggleSolo(key) {
+            tracks[key].solo = !tracks[key].solo;
+            document.getElementById(`solo-${key}`).classList.toggle('solo-active', tracks[key].solo);
+            updateMix();
+        }
+
+        function handlePan(key, val) {
+            initAudioContext();
+            const value = parseFloat(val);
+            tracks[key].panValue = value;
+            if (tracks[key].panner) {
+                tracks[key].panner.pan.setValueAtTime(value, audioCtx.currentTime);
+            }
+        }
+
+        document.getElementById('mute-stereo').addEventListener('click', () => toggleMute('stereo'));
+        document.getElementById('solo-stereo').addEventListener('click', () => toggleSolo('stereo'));
+        document.getElementById('pan-slider-stereo').addEventListener('input', (e) => handlePan('stereo', e.target.value));
+
+        document.getElementById('mute-bass').addEventListener('click', () => toggleMute('bass'));
+        document.getElementById('solo-bass').addEventListener('click', () => toggleSolo('bass'));
+        document.getElementById('pan-slider-bass').addEventListener('input', (e) => handlePan('bass', e.target.value));
+
+        document.getElementById('mute-click').addEventListener('click', () => toggleMute('click'));
+        document.getElementById('solo-click').addEventListener('click', () => toggleSolo('click'));
+        document.getElementById('pan-slider-click').addEventListener('input', (e) => handlePan('click', e.target.value));
+    </script>
+</body>
+</html>
+
+
