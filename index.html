@@ -482,9 +482,9 @@
                 </div>
             </div>
 
-            <div class="price-container">
-                <span class="price-label">Precio Único:</span>
-                <span class="price-value">$1,699 MXN</span>
+            <div class="price-container" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin: 30px 0 25px 0;">
+                <span class="price-label" style="margin-bottom: 0;">Precio Único:</span>
+                <span class="price-value" style="font-size: 2.6rem;">$1,699 MXN</span>
             </div>
 
             <div class="tech-spec-box">
@@ -679,7 +679,7 @@
             const anySolo = Object.keys(tracks).some(key => tracks[key].solo);
             Object.keys(tracks).forEach(key => {
                 const t = tracks[key];
-                let shouldVolume = 1;
+                let shouldVolume = (key === 'click') ? 0.794 : 1;
 
                 if (t.mute) {
                     shouldVolume = 0;
@@ -691,6 +691,9 @@
                     t.gainNode.gain.setValueAtTime(shouldVolume, audioCtx.currentTime);
                 } else {
                     t.audio.muted = (shouldVolume === 0);
+                    if (shouldVolume > 0 && key === 'click') {
+                        t.audio.volume = 0.794;
+                    }
                 }
             });
         }
