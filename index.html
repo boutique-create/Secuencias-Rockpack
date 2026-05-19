@@ -405,6 +405,7 @@
             <div class="daw-container">
                 <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
                 <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
+                <p style="text-align: center; font-size: 0.75rem; color: var(--warning); margin: -10px 0 20px 0; font-style: italic;">🎧 Utiliza audífonos para escuchar la referencia estéreo</p>
                 
                 <div class="daw-master-controls">
                     <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR MIX</button>
@@ -419,7 +420,7 @@
                 <div class="daw-channel ch-stereo">
                     <div class="channel-info">
                         <p class="channel-name">Stereo Instruments</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
+                        <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-stereo">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
                         </div>
@@ -440,7 +441,7 @@
                 <div class="daw-channel ch-bass">
                     <div class="channel-info">
                         <p class="channel-name">Bass Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
+                        <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-bass">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
                         </div>
@@ -461,12 +462,12 @@
                 <div class="daw-channel ch-click">
                     <div class="channel-info">
                         <p class="channel-name">Click Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
+                        <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-click">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
                         </div>
                     </div>
-                    <div class="channel-controls-group">
+                    <di                    <div class="channel-controls-group">
                         <div class="pan-container">
                             <span>L</span>
                             <input type="range" id="pan-slider-click" class="pan-slider" min="-1" max="1" step="0.1" value="0">
@@ -519,9 +520,9 @@
         let audioCtx = null;
 
         const tracks = {
-            stereo: { audio: new Audio('audio/eye-stereo.mp3'), mute: false, solo: false, panValue: 0 },
-            bass: { audio: new Audio('audio/eye-bass.mp3'), mute: false, solo: false, panValue: 0 },
-            click: { audio: new Audio('audio/eye-click.mp3'), mute: false, solo: false, panValue: 0 }
+            stereo: { audio: new Audio('audio/its-stereo.mp3'), mute: false, solo: false, panValue: 0 },
+            bass: { audio: new Audio('audio/its-bass.mp3'), mute: false, solo: false, panValue: 0 },
+            click: { audio: new Audio('audio/its-click.mp3'), mute: false, solo: false, panValue: 0 }
         };
 
         Object.keys(tracks).forEach(key => {
