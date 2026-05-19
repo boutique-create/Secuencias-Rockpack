@@ -270,6 +270,30 @@
         .channel-name { font-size: 0.9rem; font-weight: bold; margin: 0; }
         .channel-track-title { font-size: 0.75rem; color: var(--text-muted); margin: 2px 0 0 0; }
 
+        /* --- CONTENEDOR ONDAS VUMETER --- */
+        .vumeter-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            width: 60px;
+            height: 14px;
+            margin-top: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 2px;
+            border-radius: 2px;
+        }
+        .vubar {
+            flex-grow: 1;
+            height: 2px;
+            background-color: #495057;
+            border-radius: 1px;
+            transition: height 0.15s ease;
+        }
+        /* Colores vivos cuando el reproductor esté activo */
+        body.playing-global .ch-stereo .vubar { background-color: #a855f7; }
+        body.playing-global .ch-bass .vubar { background-color: #ec4899; }
+        body.playing-global .ch-click .vubar { background-color: #f59e0b; }
+
         .channel-controls-group { display: flex; align-items: center; gap: 20px; justify-content: space-between; }
 
         .pan-container { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
@@ -383,7 +407,7 @@
                 <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
                 
                 <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR TODOS</button>
+                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR MIX</button>
                     
                     <div class="timeline-container">
                         <span id="currentTimeLabel">0:00</span>
@@ -396,6 +420,9 @@
                     <div class="channel-info">
                         <p class="channel-name">Stereo Instruments</p>
                         <p class="channel-track-title">Eye in the Sky</p>
+                        <div class="vumeter-container" id="vu-stereo">
+                            <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
+                        </div>
                     </div>
                     <div class="channel-controls-group">
                         <div class="pan-container">
@@ -414,6 +441,9 @@
                     <div class="channel-info">
                         <p class="channel-name">Bass Track</p>
                         <p class="channel-track-title">Eye in the Sky</p>
+                        <div class="vumeter-container" id="vu-bass">
+                            <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
+                        </div>
                     </div>
                     <div class="channel-controls-group">
                         <div class="pan-container">
@@ -432,6 +462,9 @@
                     <div class="channel-info">
                         <p class="channel-name">Click Track</p>
                         <p class="channel-track-title">Eye in the Sky</p>
+                        <div class="vumeter-container" id="vu-click">
+                            <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
+                        </div>
                     </div>
                     <div class="channel-controls-group">
                         <div class="pan-container">
@@ -499,6 +532,7 @@
 
         let isPlaying = false;
         let isDragging = false;
+        let vuInterval = null;
 
         const modalOverlay = document.getElementById('modalOverlay');
         const openModalBtn = document.getElementById('openModalBtn');
@@ -508,7 +542,6 @@
         const currentTimeLabel = document.getElementById('currentTimeLabel');
         const totalTimeLabel = document.getElementById('totalTimeLabel');
 
-        // FUNCIÓN CORREGIDA ASOCIADA DIRECTAMENTE AL EVENTO DE ESCUCHA DEL BOTÓN
         openModalBtn.addEventListener('click', function(e) {
             e.preventDefault();
             modalOverlay.classList.add('active');
@@ -557,6 +590,40 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
+        function startVuMeters() {
+            document.body.classList.add('playing-global');
+            vuInterval = setInterval(() => {
+                const anySolo = Object.keys(tracks).some(key => tracks[key].solo);
+                Object.keys(tracks).forEach(key => {
+                    const container = document.getElementById(`vu-${key}`);
+                    if (!container) return;
+                    const bars = container.getElementsByClassName('vubar');
+                    
+                    if (tracks[key].mute || (anySolo && !tracks[key].solo)) {
+                        for (let bar of bars) { bar.style.height = '2px'; }
+                        return;
+                    }
+
+                    for (let bar of bars) {
+                        let height = Math.floor(Math.random() * 12) + 2; 
+                        bar.style.height = height + 'px';
+                    }
+                });
+            }, 120);
+        }
+
+        function stopVuMeters() {
+            document.body.classList.remove('playing-global');
+            clearInterval(vuInterval);
+            Object.keys(tracks).forEach(key => {
+                const container = document.getElementById(`vu-${key}`);
+                if (container) {
+                    const bars = container.getElementsByClassName('vubar');
+                    for (let bar of bars) { bar.style.height = '2px'; }
+                }
+            });
+        }
+
         tracks.stereo.audio.addEventListener('timeupdate', () => {
             const seek = tracks.stereo.audio.currentTime || 0;
             const duration = tracks.stereo.audio.duration || 0;
@@ -585,21 +652,24 @@
             if (!isPlaying) {
                 Promise.all(Object.keys(tracks).map(key => tracks[key].audio.play()))
                     .then(() => {
-                        masterPlayBtn.textContent = "⏸ PAUSAR TODOS";
+                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
                         masterPlayBtn.classList.add('playing');
                         isPlaying = true;
+                        startVuMeters();
                     })
                     .catch(() => {
                         Object.keys(tracks).forEach(key => tracks[key].audio.play());
-                        masterPlayBtn.textContent = "⏸ PAUSAR TODOS";
+                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
                         masterPlayBtn.classList.add('playing');
                         isPlaying = true;
+                        startVuMeters();
                     });
             } else {
                 Object.keys(tracks).forEach(key => tracks[key].audio.pause());
-                masterPlayBtn.textContent = "▶ REPRODUCIR TODOS";
+                masterPlayBtn.textContent = "▶ REPRODUCIR MIX";
                 masterPlayBtn.classList.remove('playing');
                 isPlaying = false;
+                stopVuMeters();
             }
         });
 
@@ -658,5 +728,3 @@
     </script>
 </body>
 </html>
-
-
