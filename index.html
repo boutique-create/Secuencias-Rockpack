@@ -103,12 +103,6 @@
             margin: 0 0 10px 0;
         }
 
-        .pack-explanation ul {
-            margin: 0;
-            padding-left: 20px;
-            color: var(--text-muted);
-        }
-
         .btn-modal-trigger {
             display: block;
             background: none;
@@ -354,13 +348,13 @@
     </div>
 
     <script>
-        console.log("Iniciando carga de tracks con Howler...");
+        console.log("Iniciando carga limpia de micro-tracks...");
 
-        // Enlaces en servidores CDN libres de bloqueos CORS
+        // Usamos efectos de sonido ultra cortos (menos de 2 segundos) para carga instantánea y cero lag
         const tracks = {
-            stereo: new Howl({ src: ['https://actions.google.com/sounds/v1/ambiences/morning_birds.ogg'], html5: false, loop: true }),
-            bass: new Howl({ src: ['https://actions.google.com/sounds/v1/ambiences/coffee_shop_atmosphere.ogg'], html5: false, loop: true }),
-            click: new Howl({ src: ['https://actions.google.com/sounds/v1/ambiences/rain_heavy_loud.ogg'], html5: false, loop: true })
+            stereo: new Howl({ src: ['https://actions.google.com/sounds/v1/science_fiction/glitch.ogg'], html5: false, loop: true }),
+            bass: new Howl({ src: ['https://actions.google.com/sounds/v1/foley/crumple_paper.ogg'], html5: false, loop: true }),
+            click: new Howl({ src: ['https://actions.google.com/sounds/v1/foley/typing_fast.ogg'], html5: false, loop: true })
         };
 
         let isPlaying = false;
@@ -372,11 +366,10 @@
         const currentTimeLabel = document.getElementById('currentTimeLabel');
         const totalTimeLabel = document.getElementById('totalTimeLabel');
 
-        // Eventos del Modal
+        // El modal funciona independientemente del estado de carga del audio
         openModalBtn.addEventListener('click', () => modalOverlay.classList.add('active'));
         closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
 
-        // Conversión de segundos a minutos:segundos
         function formatTime(secs) {
             if (isNaN(secs) || secs === Infinity) return "0:00";
             let m = Math.floor(secs / 60);
@@ -384,11 +377,10 @@
             return m + ":" + (s < 10 ? "0" + s : s);
         }
 
-        // Sistema de rastreo continuo para la barra de progreso
+        // Animación robusta para la barra de progreso
         function updateTimeline() {
             if (!isPlaying) return;
             
-            // Usamos el track principal como referencia de tiempo
             const seek = tracks.stereo.seek() || 0;
             const duration = tracks.stereo.duration() || 0;
             
@@ -399,11 +391,9 @@
                 globalProgressBar.value = (seek / duration) * 100;
             }
             
-            // Llama recursivamente a la función en el próximo frame visual
             requestAnimationFrame(updateTimeline);
         }
 
-        // Mover la barra de progreso manualmente
         globalProgressBar.addEventListener('input', (e) => {
             const duration = tracks.stereo.duration() || 0;
             if (duration === 0) return;
@@ -411,8 +401,8 @@
             Object.keys(tracks).forEach(ch => tracks[ch].seek(targetTime));
         });
 
-        // Evento Máster Play
         masterPlayBtn.addEventListener('click', () => {
+            // Desbloqueo forzado del chip de sonido móvil
             if (Howler.ctx && Howler.ctx.state === 'suspended') {
                 Howler.ctx.resume();
             }
@@ -422,4 +412,10 @@
                 masterPlayBtn.textContent = "⏸ PAUSAR";
                 masterPlayBtn.style.backgroundColor = "var(--success-green)";
                 isPlaying = true;
-                // 
+                requestAnimationFrame(updateTimeline);
+            } else {
+                Object.keys(tracks).forEach(ch => tracks[ch].pause());
+                masterPlayBtn.textContent = "▶ REPRODUCIR";
+                masterPlayBtn.style.backgroundColor = "#343a40";
+                isPlaying = false;
+ 
