@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boutique-Create | Secuencias Musicales</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-    <script>eruda.init();</script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/plugins/multitrack.min.js"></script>
     
     <style>
         :root {
@@ -18,253 +16,59 @@
             --text-light: #ffffff;     
             --text-muted: #adb5bd;    
             --cyan-led: #00fff0;       
-            --cyan-led-hover: #00e1d5;
             --success-green: #10b981;  
-            --danger-red: #ef4444;
-            --warning: #ffb703;
             --daw-bg: #151719;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: var(--bg-light); margin: 0; padding: 0; }
+        .brand-header { background-color: #ffffff; padding: 40px 20px; text-align: center; }
+        .logo-container { width: 100px; height: 100px; margin: 0 auto 10px auto; }
+        .brand-name { font-size: 1.5rem; font-weight: bold; color: #3c4146; text-transform: uppercase; letter-spacing: 2px; }
+        .main-content { max-width: 680px; margin: 0 auto 60px auto; padding: 0 20px; }
         
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background-color: var(--bg-light);
-            color: #333333;
-            margin: 0;
-            padding: 0;
-        }
+        .console-card { background-color: var(--bg-card); border: 6px solid var(--border-rack); border-radius: 12px; padding: 35px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); color: var(--text-light); }
+        .console-card h2 { font-size: 1.8rem; margin: 0 0 10px 0; text-align: center; }
+        .subtitle { color: var(--text-muted); font-size: 1rem; text-align: center; margin-bottom: 30px; }
 
-        .brand-header {
-            background-color: #ffffff;
-            padding: 50px 20px 40px 20px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .logo-container {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 15px auto;
-        }
-
-        .brand-name {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #3c4146;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        .main-content {
-            max-width: 680px;
-            margin: 0 auto 60px auto;
-            padding: 0 20px;
-        }
-
-        .console-card {
-            background-color: var(--bg-card);
-            border: 6px solid var(--border-rack);
-            border-radius: 12px;
-            padding: 40px 35px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            color: var(--text-light);
-        }
-
-        .console-card h2 {
-            font-size: 1.9rem;
-            margin: 0 0 10px 0;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .console-card .subtitle {
-            color: var(--text-muted);
-            font-size: 1rem;
-            text-align: center;
-            line-height: 1.5;
-            margin: 0 0 30px 0;
-        }
-
-        .pack-explanation {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid #343a40;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .pack-explanation p {
-            margin: 0 0 10px 0;
-        }
-
-        .btn-modal-trigger {
-            display: block;
-            background: none;
-            border: 1px solid #495057;
-            color: var(--text-muted);
-            padding: 15px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin: 0 auto 30px auto;
-            transition: all 0.2s;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .btn-modal-trigger:hover {
-            color: #ffffff;
-            border-color: #6c757d;
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        /* --- MINI DAW --- */
-        .daw-container {
-            background-color: var(--daw-bg);
-            border: 2px solid var(--border-rack);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-
-        .daw-title {
-            font-size: 0.9rem;
-            color: var(--cyan-led);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin: 0 0 5px 0;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .daw-subtitle {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin: 0 0 20px 0;
-        }
-
-        .daw-master-controls {
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 1px dashed var(--border-rack);
-            padding-bottom: 15px;
-        }
-
-        .btn-master {
-            background-color: #343a40;
-            border: 1px solid #495057;
-            color: white;
-            padding: 12px 30px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-            width: 100%;
-            max-width: 250px;
-            margin-bottom: 15px;
-        }
-
-        .timeline-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 400px;
-            margin: 0 auto;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-family: monospace;
-        }
-
-        .progress-slider {
-            -webkit-appearance: none;
-            flex-grow: 1;
-            height: 6px;
-            background: #2a2e33;
-            border-radius: 3px;
-            outline: none;
-        }
-
-        .progress-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--cyan-led);
-            cursor: pointer;
-        }
-
-        .daw-channel {
-            display: flex;
-            flex-direction: column;
-            background: #1d2023;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 12px;
-            border-left: 4px solid #495057;
-        }
+        .btn-modal-trigger { display: block; background: none; border: 1px solid #495057; color: var(--text-muted); padding: 15px; border-radius: 6px; cursor: pointer; font-weight: 600; margin: 0 auto 30px auto; width: 100%; max-width: 400px; text-align: center; }
         
-        @media (min-width: 520px) {
-            .daw-channel {
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
+        /* --- MULTITRACK STRUCTURE --- */
+        .daw-container { background-color: var(--daw-bg); border: 2px solid var(--border-rack); border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .daw-title { font-size: 0.9rem; color: var(--cyan-led); text-transform: uppercase; text-align: center; font-weight: bold; margin: 0 0 15px 0; }
+        
+        .btn-master { display: block; background-color: #343a40; border: 1px solid #495057; color: white; padding: 12px 30px; font-weight: bold; border-radius: 4px; cursor: pointer; margin: 0 auto 20px auto; width: 100%; max-width: 200px; }
+        
+        .track-row { background: #1d2023; padding: 10px; border-radius: 6px; margin-bottom: 10px; border-left: 4px solid var(--cyan-led); }
+        .track-meta { font-size: 0.85rem; font-weight: bold; color: var(--text-light); margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .waveform-container { background: #111315; border-radius: 4px; min-height: 40px; margin-bottom: 5px; }
+        
+        .track-controls { display: flex; gap: 10px; }
+        .btn-mute { background: #2a2e33; border: 1px solid #495057; color: var(--text-muted); padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
+        .btn-mute.active { background: #ef4444; color: white; }
 
-        .daw-channel.ch-stereo { border-left-color: #a855f7; }
-        .daw-channel.ch-bass { border-left-color: #ec4899; }
-        .daw-channel.ch-click { border-left-color: #f59e0b; }
-
-        .channel-info { flex-grow: 1; text-align: left; margin-bottom: 12px; }
-        @media (min-width: 520px) { .channel-info { margin-bottom: 0; } }
-
-        .channel-name { font-size: 0.9rem; font-weight: bold; margin: 0; }
-
-        .channel-controls-group { display: flex; align-items: center; gap: 15px; justify-content: space-between; }
-        .pan-slider { -webkit-appearance: none; width: 70px; height: 4px; background: #343a40; border-radius: 2px; outline: none; }
-        .btn-daw { width: 38px; height: 34px; border: 1px solid #495057; background-color: #2a2e33; color: var(--text-muted); font-weight: bold; font-size: 0.85rem; border-radius: 4px; cursor: pointer; }
-
-        /* PRECIOS Y ACCIONES */
-        .price-container { text-align: center; margin: 30px 0 25px 0; }
-        .price-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 5px; }
-        .price-value { font-size: 3rem; font-weight: 800; color: #ffffff; }
-
-        .action-container { width: 100%; text-align: center; }
-        .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
+        /* PRECIOS */
+        .price-container { text-align: center; margin: 30px 0; }
+        .price-value { font-size: 2.8rem; font-weight: 800; }
+        .btn-acquire { display: block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 100%; max-width: 420px; margin: 0 auto; border-radius: 50px; font-weight: bold; text-align: center; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
 
         /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 1000; padding: 20px; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 600px; max-height: 85vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .modal-header { padding: 20px 25px; border-bottom: 1px solid #343a40; display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { margin: 0; font-size: 1.3rem; color: #ffffff; }
+        .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 600px; max-height: 80vh; display: flex; flex-direction: column; }
+        .modal-header { padding: 15px 25px; border-bottom: 1px solid #343a40; display: flex; justify-content: space-between; align-items: center; }
         .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; }
-        .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
-        .songs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; margin: 0; list-style: none; }
-        @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
-        .songs-grid li { font-size: 0.85rem; color: #dee2e6; padding: 8px 12px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; text-align: left; }
+        .modal-body { padding: 20px; overflow-y: auto; }
+        .songs-grid { display: grid; grid-template-columns: 1fr; gap: 8px; padding: 0; list-style: none; margin: 0; }
+        @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; } }
+        .songs-grid li { font-size: 0.85rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); }
     </style>
 </head>
 <body>
 
     <header class="brand-header">
         <div class="logo-container">
-            <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <rect x="20" y="38" width="8" height="24" rx="4" fill="#9b59b6" opacity="0.7"/>
-                <rect x="33" y="28" width="8" height="44" rx="4" fill="#9b59b6" />
-                <rect x="46" y="15" width="8" height="70" rx="4" fill="#d35400" />
-                <rect x="59" y="22" width="8" height="40" rx="4" fill="#f39c12" />
-                <rect x="72" y="33" width="8" height="34" rx="4" fill="#f39c12" opacity="0.7"/>
-            </svg>
+            <svg viewBox="0 0 100 100" width="100%" height="100%"><rect x="33" y="28" width="8" height="44" rx="4" fill="#9b59b6" /><rect x="46" y="15" width="8" height="70" rx="4" fill="#d35400" /><rect x="59" y="22" width="8" height="40" rx="4" fill="#f39c12" /></svg>
         </div>
         <h1 class="brand-name">Boutique-Create</h1>
     </header>
@@ -272,73 +76,41 @@
     <main class="main-content">
         <div class="console-card">
             <h2>Mega Pack de Secuencias Musicales</h2>
-            <p class="subtitle">Multi tracks de secuencias musicales profesionales.</p>
-
-            <div class="pack-explanation">
-                <p><strong>¿Qué incluye este paquete profesional?</strong></p>
-                <p>Acceso completo a un catálogo selecto de <strong>110 canciones icónicas</strong> divididas en 3 tracks independientes (Bass, Click e Instrumental).</p>
-            </div>
+            <p class="subtitle">Multi tracks de secuencias profesionales independientes.</p>
 
             <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
-                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
-                <p class="daw-subtitle">Líneas de audio seguras ejecutándose vía Web Audio API móvil.</p>
+                <p class="daw-title">🎛️ Mezclador Multitrack Sincronizado</p>
+                <button class="btn-master" id="masterPlayBtn">▶ REPRODUCIR</button>
                 
-                <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR</button>
-                    <div class="timeline-container">
-                        <span id="currentTimeLabel">0:00</span>
-                        <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
-                        <span id="totalTimeLabel">0:00</span>
-                    </div>
+                <div class="track-row">
+                    <div class="track-meta"><span>Stereo Instruments</span></div>
+                    <div id="wave-stereo" class="waveform-container"></div>
+                    <div class="track-controls"><button class="btn-mute" id="mute-stereo">MUTE</button></div>
                 </div>
 
-                <div class="daw-channel ch-stereo">
-                    <div class="channel-info"><p class="channel-name">Stereo Instruments</p></div>
-                    <div class="channel-controls-group">
-                        <input type="range" class="pan-slider" id="pan-stereo" min="-1" max="1" step="0.1" value="0">
-                        <button class="btn-daw" id="mute-stereo">M</button>
-                        <button class="btn-daw" id="solo-stereo">S</button>
-                    </div>
+                <div class="track-row">
+                    <div class="track-meta"><span>Bass Track</span></div>
+                    <div id="wave-bass" class="waveform-container"></div>
+                    <div class="track-controls"><button class="btn-mute" id="mute-bass">MUTE</button></div>
                 </div>
 
-                <div class="daw-channel ch-bass">
-                    <div class="channel-info"><p class="channel-name">Bass Track</p></div>
-                    <div class="channel-controls-group">
-                        <input type="range" class="pan-slider" id="pan-bass" min="-1" max="1" step="0.1" value="0">
-                        <button class="btn-daw" id="mute-bass">M</button>
-                        <button class="btn-daw" id="solo-bass">S</button>
-                    </div>
-                </div>
-
-                <div class="daw-channel ch-click">
-                    <div class="channel-info"><p class="channel-name">Click Track</p></div>
-                    <div class="channel-controls-group">
-                        <input type="range" class="pan-slider" id="pan-click" min="-1" max="1" step="0.1" value="0">
-                        <button class="btn-daw" id="mute-click">M</button>
-                        <button class="btn-daw" id="solo-click">S</button>
-                    </div>
+                <div class="track-row">
+                    <div class="track-meta"><span>Click Track</span></div>
+                    <div id="wave-click" class="waveform-container"></div>
+                    <div class="track-controls"><button class="btn-mute" id="mute-click">MUTE</button></div>
                 </div>
             </div>
 
-            <div class="price-container">
-                <span class="price-label">Precio Único:</span>
-                <span class="price-value">$1,699 MXN</span>
-            </div>
-
-            <div class="action-container">
-                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Licencia</a>
-            </div>
+            <div class="price-container"><span class="price-value">$1,699 MXN</span></div>
+            <div class="action-container"><a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Licencia</a></div>
         </div>
     </main>
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
-            <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
-            </div>
+            <div class="modal-header"><h3>Catálogo Disponible</h3><button class="modal-close" id="closeModalBtn">&times;</button></div>
             <div class="modal-body">
                 <ul class="songs-grid">
                     <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE WALL</li><li>5. ANOTHER DAY IN PARADISE</li><li>6. BABY COME BACK</li><li>7. BACK IN BLACK</li><li>8. BILLIE JEAN</li><li>9. BLACK ORPHEUS</li><li>10. BLACK VELVET</li><li>11. BODY AND SOUL</li><li>12. BREATHLESS</li><li>13. CLOSE TO YOU</li><li>14. COCAINE</li><li>15. COME TOGETHER</li><li>16. COMFORTABLY NUMB</li><li>17. COSMIC GIRL</li><li>18. CRAZY LITTLE THING CALLED LOVE</li><li>19. CREEP</li><li>20. DANCE MONKEY</li><li>21. DUA LIPA MEDLEY</li><li>22. ENGLISHMAN IN NEW YORK</li><li>23. ENTER SANDMAN</li><li>24. EUROPE</li><li>25. EVERY BREATH YOU TAKE</li><li>26. EVERYTIME YOU GO AWAY</li><li>27. EVERYBODY WANTS TO RULE THE WORLD</li><li>28. EVERYTHING</li><li>29. EYE IN THE SKY</li><li>30. FANTASY</li><li>31. HARD TO SAY I'M SORRY</li><li>32. HAVE YOU EVER SEEN THE RAIN</li><li>33. HERE WE ARE</li><li>34. HOLD THE LINE</li><li>35. HOPELESSLY DEVOTED TO YOU</li><li>36. HOTEL CALIFORNIA</li><li>37. HOW DEEP IS YOUR LOVE</li><li>38. IF I AIN'T GOT YOU</li><li>39. IF YOU LEAVE ME NOW</li><li>40. I FEEL LIKE A WOMAN</li><li>41. I LOOK TO YOU</li><li>42. I LOVE ROCK AND ROLL</li><li>43. I JUST WANNA STOP</li><li>44. I'M NOT IN LOVE</li><li>45. IMAGINE</li><li>46. IN THE MOOD</li><li>47. IS THIS LOVE</li><li>48. IT AINT OVER TIL ITS OVER</li><li>49. ITS MY LIFE</li><li>50. JUMP</li><li>51. KEANE EVERYBODY</li><li>52. KILLING ME SOFTLY</li><li>53. LA GRANGE</li><li>54. LAST DAY OF SUMMER</li><li>55. LISTEN</li><li>56. LIVE AND LET DIE</li><li>57. LIVE IS LIFE</li><li>58. LOVE ME TWO TIMES</li><li>59. MARGARITAVILLE</li><li>60. MAYBE TOMORROW</li><li>61. MEDLEY 70'S</li><li>62. MEDLEY W HOUSTON</li><li>63. MORE THAN WORDS</li><li>64. MOVE OVER</li><li>65. MY WAY</li><li>66. NEW KID IN TOWN</li><li>67. NEW YORK NEW YORK</li><li>68. NEW SENSATION</li><li>69. NOTHING'S GONNA STOP US NOW</li><li>70. OWNER OF A LONELY HEART</li><li>71. PRETTY WOMAN</li><li>72. PRIDE (IN THE NAME OF LOVE)</li><li>73. QUEEN MEDLEY</li><li>74. REASONS</li><li>75. ROCK & ROLL</li><li>76. ROSANNA</li><li>77. SATISFACTION</li><li>78. SELENA DISCO 70'S</li><li>79. SEX ON FIRE</li><li>80. SMELLS LIKE TEEN SPIRIT</li><li>81. SMOKE ON THE WATER</li><li>82. SOMETHING</li><li>83. STAIRWAY TO HEAVEN</li><li>84. SUMMER OF SIXTY NINE</li><li>85. SUSPICIOUS MINDS</li><li>86. SWAY</li><li>87. SWEAT A LALALALA LONG</li><li>88. SWEET CAROLINE</li><li>89. SWEET CHILD OF MINE</li><li>90. SWEET HOME ALABAMA</li><li>91. THAT'S WHAT I LIKE</li><li>92. TEARS IN HEAVEN</li><li>93. THANK YOU</li><li>94. THE FINAL COUNTDOWN</li><li>95. THE JOKER</li><li>96. THE LADY IS A TRAMP</li><li>97. THE REASON</li><li>98. THE X SONG</li><li>100. TREASURE</li><li>101. TIME AFTER TIME</li><li>102. TITANIC</li><li>103. UNFORGETTABLE</li><li>104. UPTOWN FUNK</li><li>105. VEHICLE</li><li>106. WHERE THE STREETS HAVE NO NAME</li><li>107. WITH OR WITHOUT YOU</li><li>108. WITHOUT YOU</li><li>109. YELLOW</li><li>110. YOU SHOULD BE DANCING</li><li>111. YOU'VE GOT A FRIEND</li>
@@ -348,74 +120,54 @@
     </div>
 
     <script>
-        console.log("Iniciando carga limpia de micro-tracks...");
-
-        // Usamos efectos de sonido ultra cortos (menos de 2 segundos) para carga instantánea y cero lag
-        const tracks = {
-            stereo: new Howl({ src: ['https://actions.google.com/sounds/v1/science_fiction/glitch.ogg'], html5: false, loop: true }),
-            bass: new Howl({ src: ['https://actions.google.com/sounds/v1/foley/crumple_paper.ogg'], html5: false, loop: true }),
-            click: new Howl({ src: ['https://actions.google.com/sounds/v1/foley/typing_fast.ogg'], html5: false, loop: true })
-        };
-
-        let isPlaying = false;
+        // Lógica del Modal integrada
         const openModalBtn = document.getElementById('openModalBtn');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const modalOverlay = document.getElementById('modalOverlay');
-        const masterPlayBtn = document.getElementById('dawMasterPlay');
-        const globalProgressBar = document.getElementById('globalProgressBar');
-        const currentTimeLabel = document.getElementById('currentTimeLabel');
-        const totalTimeLabel = document.getElementById('totalTimeLabel');
-
-        // El modal funciona independientemente del estado de carga del audio
         openModalBtn.addEventListener('click', () => modalOverlay.classList.add('active'));
         closeModalBtn.addEventListener('click', () => modalOverlay.classList.remove('active'));
 
-        function formatTime(secs) {
-            if (isNaN(secs) || secs === Infinity) return "0:00";
-            let m = Math.floor(secs / 60);
-            let s = Math.floor(secs % 60);
-            return m + ":" + (s < 10 ? "0" + s : s);
-        }
-
-        // Animación robusta para la barra de progreso
-        function updateTimeline() {
-            if (!isPlaying) return;
-            
-            const seek = tracks.stereo.seek() || 0;
-            const duration = tracks.stereo.duration() || 0;
-            
-            currentTimeLabel.textContent = formatTime(seek);
-            
-            if (duration > 0) {
-                totalTimeLabel.textContent = formatTime(duration);
-                globalProgressBar.value = (seek / duration) * 100;
-            }
-            
-            requestAnimationFrame(updateTimeline);
-        }
-
-        globalProgressBar.addEventListener('input', (e) => {
-            const duration = tracks.stereo.duration() || 0;
-            if (duration === 0) return;
-            const targetTime = (e.target.value / 100) * duration;
-            Object.keys(tracks).forEach(ch => tracks[ch].seek(targetTime));
+        // INICIALIZACIÓN DEL MOTOR MULTITRACK PROFESIONAL (WAVESURFER)
+        const multitrack = Multitrack.create([
+            { id: 0, url: 'https://actions.google.com/sounds/v1/science_fiction/glitch.ogg', container: document.getElementById('wave-stereo'), waveColor: '#a855f7', progressColor: '#7c3aed' },
+            { id: 1, url: 'https://actions.google.com/sounds/v1/foley/crumple_paper.ogg', container: document.getElementById('wave-bass'), waveColor: '#ec4899', progressColor: '#db2777' },
+            { id: 2, url: 'https://actions.google.com/sounds/v1/foley/typing_fast.ogg', container: document.getElementById('wave-click'), waveColor: '#f59e0b', progressColor: '#d97706' }
+        ], {
+            minPxPerSec: 30, // Ajuste fluido para pantallas móviles
+            rightButtonDrag: false
         });
 
-        masterPlayBtn.addEventListener('click', () => {
-            // Desbloqueo forzado del chip de sonido móvil
-            if (Howler.ctx && Howler.ctx.state === 'suspended') {
-                Howler.ctx.resume();
-            }
+        const masterPlayBtn = document.getElementById('masterPlayBtn');
+        let isPlaying = false;
 
+        // Evento único Master Play
+        masterPlayBtn.addEventListener('click', () => {
             if (!isPlaying) {
-                Object.keys(tracks).forEach(ch => tracks[ch].play());
+                multitrack.play();
                 masterPlayBtn.textContent = "⏸ PAUSAR";
                 masterPlayBtn.style.backgroundColor = "var(--success-green)";
                 isPlaying = true;
-                requestAnimationFrame(updateTimeline);
             } else {
-                Object.keys(tracks).forEach(ch => tracks[ch].pause());
+                multitrack.pause();
                 masterPlayBtn.textContent = "▶ REPRODUCIR";
                 masterPlayBtn.style.backgroundColor = "#343a40";
                 isPlaying = false;
- 
+            }
+        });
+
+        // Eventos Mute Individuales por canal
+        document.getElementById('mute-stereo').addEventListener('click', (e) => {
+            e.target.classList.toggle('active');
+            multitrack.toggleMute(0);
+        });
+        document.getElementById('mute-bass').addEventListener('click', (e) => {
+            e.target.classList.toggle('active');
+            multitrack.toggleMute(1);
+        });
+        document.getElementById('mute-click').addEventListener('click', (e) => {
+            e.target.classList.toggle('active');
+            multitrack.toggleMute(2);
+        });
+    </script>
+</body>
+</html>
