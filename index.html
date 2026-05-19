@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique-Create | Secuencias Musicales</title>
+    <title>Aislado | Mezclador Multitrack</title>
     <style>
         :root {
-            --bg-light: #f3f4f6;       
-            --bg-card: #212529;        
             --border-rack: #343a40;    
             --text-light: #ffffff;     
             --text-muted: #adb5bd;    
             --cyan-led: #00fff0;       
-            --cyan-led-hover: #00e1d5;
             --success-green: #10b981;  
             --danger-red: #ef4444;
             --warning: #ffb703;
@@ -25,141 +22,25 @@
         
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background-color: var(--bg-light);
-            color: #333333;
+            background-color: #212529;
             margin: 0;
-            padding: 0;
-        }
-
-        .brand-header {
-            background-color: #ffffff;
-            padding: 50px 20px 40px 20px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .logo-container {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 15px auto;
-        }
-
-        .brand-name {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #3c4146;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        .main-content {
-            max-width: 680px;
-            margin: 0 auto 60px auto;
-            padding: 0 20px;
-        }
-
-        .console-card {
-            background-color: var(--bg-card);
-            border: 6px solid var(--border-rack);
-            border-radius: 12px;
-            padding: 40px 35px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            color: var(--text-light);
-        }
-
-        .console-card h2 {
-            font-size: 1.9rem;
-            margin: 0 0 10px 0;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .console-card .subtitle {
-            color: var(--text-muted);
-            font-size: 1rem;
-            text-align: center;
-            line-height: 1.5;
-            margin: 0 0 30px 0;
-        }
-
-        .pack-explanation {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid #343a40;
-            border-radius: 8px;
             padding: 20px;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        .pack-explanation p {
-            margin: 0 0 10px 0;
-        }
-
-        .pack-explanation ul {
-            margin: 0;
-            padding-left: 20px;
-            color: var(--text-muted);
-        }
-
-        .pack-explanation ul li {
-            margin-bottom: 5px;
-        }
-
-        .track-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-        }
-
-        .track-table th {
-            color: var(--text-muted);
-            text-align: left;
-            padding: 10px 12px;
-            font-weight: 500;
-            border-bottom: 1px solid #495057;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-        }
-
-        .track-table td {
-            padding: 14px 12px;
-            border-bottom: 1px solid #343a40;
-        }
-
-        .track-name { font-weight: 600; color: #ffffff; }
-        .track-desc { color: var(--text-muted); }
-        .led-check { color: var(--success-green); font-weight: bold; text-align: right; font-size: 1.1rem; }
-
-        .btn-modal-trigger {
-            display: block;
-            background: none;
-            border: 1px solid #495057;
-            color: var(--text-muted);
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 0 auto 30px auto;
-            transition: all 0.2s;
-        }
-
-        .btn-modal-trigger:hover {
-            color: #ffffff;
-            border-color: #6c757d;
-            background-color: rgba(255,255,255,0.05);
-        }
-
-        /* --- MINI DAW --- */
+        /* --- CONTENEDOR DAW AISLADO --- */
         .daw-container {
             background-color: var(--daw-bg);
             border: 2px solid var(--border-rack);
             border-radius: 8px;
             padding: 20px;
-            margin-bottom: 30px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            color: var(--text-light);
         }
 
         .daw-title {
@@ -282,193 +163,231 @@
 
         .btn-daw.mute-active { background-color: var(--danger-red); color: white; border-color: var(--danger-red); }
         .btn-daw.solo-active { background-color: var(--warning); color: #000; border-color: var(--warning); }
-
-        /* PRECIOS Y ACCIONES */
-        .price-container { text-align: center; margin: 30px 0 25px 0; }
-        .price-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 5px; }
-        .price-value { font-size: 3rem; font-weight: 800; color: #ffffff; }
-
-        .tech-spec-box { background-color: rgba(0, 0, 0, 0.25); border: 1px solid #495057; border-radius: 8px; padding: 15px 20px; margin-bottom: 35px; text-align: center; }
-        .tech-spec-box .badge { display: inline-block; background-color: #495057; color: #ffffff; padding: 3px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; }
-        .tech-spec-box p { margin: 0; font-size: 0.85rem; color: var(--text-muted); }
-
-        .action-container { width: 100%; text-align: center; }
-        .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
-        .btn-acquire:hover { background-color: var(--cyan-led-hover); transform: scale(1.02); }
-
-        /* MODAL */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 550px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .modal-header { padding: 20px 25px; border-bottom: 1px solid #343a40; display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { margin: 0; font-size: 1.3rem; color: #ffffff; }
-        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; }
-        .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
-        .songs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; margin: 0; list-style: none; }
-        @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
-        .songs-grid li { font-size: 0.9rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #6c757d; }
     </style>
 </head>
 <body>
 
-    <header class="brand-header">
-        <div class="logo-container">
-            <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#f39c12" />
-                        <stop offset="50%" stop-color="#d35400" />
-                        <stop offset="100%" stop-color="#9b59b6" />
-                    </linearGradient>
-                </defs>
-                <rect x="20" y="38" width="8" height="24" rx="4" fill="#9b59b6" opacity="0.7"/>
-                <rect x="33" y="28" width="8" height="44" rx="4" fill="#9b59b6" />
-                <rect x="46" y="15" width="8" height="70" rx="4" fill="url(#waveGradient)" />
-                <rect x="59" y="22" width="8" height="40" rx="4" fill="#f39c12" />
-                <rect x="72" y="33" width="8" height="34" rx="4" fill="#f39c12" opacity="0.7"/>
-                <circle cx="88" cy="42" r="4" fill="#f39c12" opacity="0.8"/>
-            </svg>
-        </div>
-        <h1 class="brand-name">Boutique-Create</h1>
-    </header>
-
-    <main class="main-content">
-        <div class="console-card">
-            <h2>Mega Pack de Secuencias Musicales</h2>
-            <p class="subtitle">Multi tracks de secuencias musicales profesionales para requerimientos y optimizaciones de tus shows en vivo.</p>
-
-            <div class="pack-explanation">
-                <p><strong>¿Qué incluye este paquete profesional?</strong></p>
-                <p>Recibirás acceso completo a un catálogo selecto de <strong>110 canciones icónicas</strong>. Cada una de ellas viene perfectamente dividida en su estructura nativa de <strong>3 tracks independientes</strong>, permitiéndote un control total sobre la mezcla de tu show en vivo:</p>
-                <ul>
-                    <li><strong>Bass Track:</strong> El bajo por separado para refuerzo en sala o monetores.</li>
-                    <li><strong>Click Track:</strong> Guía de metrónomo estricta para mantener a la banda sincronizada.</li>
-                    <li><strong>Instrumental Mix:</strong> La base musical completa libre de Batería y Voz principal.</li>
-                </ul>
-            </div>
-
-            <table class="track-table">
-                <thead>
-                    <tr>
-                        <th>Estructura Multi-Track</th>
-                        <th>Descripción</th>
-                        <th style="text-align: right;">Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="track-name">Bass Track</td>
-                        <td class="track-desc">Canal de bajo eléctrico o sintético directo por separado.</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                    <tr>
-                        <td class="track-name">Stereo Instrument Track</td>
-                        <td class="track-desc">Mezcla estéreo completa de instrumentación (Sin batería y sin voz).</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                    <tr>
-                        <td class="track-name">Click Track</td>
-                        <td class="track-desc">Guía de metrónomo estricta para sincronización en directo.</td>
-                        <td class="led-check">✓</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
-
-            <div class="daw-container">
-                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
-                <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
-                
-                <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR MIX</button>
-                    
-                    <div class="timeline-container">
-                        <span id="currentTimeLabel">0:00</span>
-                        <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
-                        <span id="totalTimeLabel">0:00</span>
-                    </div>
-                </div>
-
-                <div class="daw-channel ch-stereo">
-                    <div class="channel-info">
-                        <p class="channel-name">Stereo Instruments</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
-                    <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" id="pan-slider-stereo" class="pan-slider" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-stereo">M</button>
-                            <button class="btn-daw" id="solo-stereo">S</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="daw-channel ch-bass">
-                    <div class="channel-info">
-                        <p class="channel-name">Bass Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
-                    <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" id="pan-slider-bass" class="pan-slider" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-bass">M</button>
-                            <button class="btn-daw" id="solo-bass">S</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="daw-channel ch-click">
-                    <div class="channel-info">
-                        <p class="channel-name">Click Track</p>
-                        <p class="channel-track-title">Eye in the Sky</p>
-                    </div>
-                    <div class="channel-controls-group">
-                        <div class="pan-container">
-                            <span>L</span>
-                            <input type="range" id="pan-slider-click" class="pan-slider" min="-1" max="1" step="0.1" value="0">
-                            <span>R</span>
-                        </div>
-                        <div class="channel-buttons">
-                            <button class="btn-daw" id="mute-click">M</button>
-                            <button class="btn-daw" id="solo-click">S</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="price-container">
-                <span class="price-label">Precio Único:</span>
-                <span class="price-value">$1,699 MXN</span>
-            </div>
-
-            <div class="tech-spec-box">
-                <span class="badge">16GB MEGA</span>
-                <p>La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA.</p>
-            </div>
-
-            <div class="action-container">
-                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Paquete</a>
+    <div class="daw-container">
+        <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
+        <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
+        
+        <div class="daw-master-controls">
+            <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR MIX</button>
+            
+            <div class="timeline-container">
+                <span id="currentTimeLabel">0:00</span>
+                <input type="range" id="globalProgressBar" class="progress-slider" min="0" max="100" value="0">
+                <span id="totalTimeLabel">0:00</span>
             </div>
         </div>
-    </main>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
+        <div class="daw-channel ch-stereo">
+            <div class="channel-info">
+                <p class="channel-name">Stereo Instruments</p>
+                <p class="channel-track-title">Eye in the Sky</p>
             </div>
-            <div class="modal-body">
-                <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE W
+            <div class="channel-controls-group">
+                <div class="pan-container">
+                    <span>L</span>
+                    <input type="range" id="pan-slider-stereo" class="pan-slider" min="-1" max="1" step="0.1" value="0">
+                    <span>R</span>
+                </div>
+                <div class="channel-buttons">
+                    <button class="btn-daw" id="mute-stereo">M</button>
+                    <button class="btn-daw" id="solo-stereo">S</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="daw-channel ch-bass">
+            <div class="channel-info">
+                <p class="channel-name">Bass Track</p>
+                <p class="channel-track-title">Eye in the Sky</p>
+            </div>
+            <div class="channel-controls-group">
+                <div class="pan-container">
+                    <span>L</span>
+                    <input type="range" id="pan-slider-bass" class="pan-slider" min="-1" max="1" step="0.1" value="0">
+                    <span>R</span>
+                </div>
+                <div class="channel-buttons">
+                    <button class="btn-daw" id="mute-bass">M</button>
+                    <button class="btn-daw" id="solo-bass">S</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="daw-channel ch-click">
+            <div class="channel-info">
+                <p class="channel-name">Click Track</p>
+                <p class="channel-track-title">Eye in the Sky</p>
+            </div>
+            <div class="channel-controls-group">
+                <div class="pan-container">
+                    <span>L</span>
+                    <input type="range" id="pan-slider-click" class="pan-slider" min="-1" max="1" step="0.1" value="0">
+                    <span>R</span>
+                </div>
+                <div class="channel-buttons">
+                    <button class="btn-daw" id="mute-click">M</button>
+                    <button class="btn-daw" id="solo-click">S</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        const tracks = {
+            stereo: { audio: new Audio('audio/eye-stereo.mp3'), mute: false, solo: false, panValue: 0 },
+            bass: { audio: new Audio('audio/eye-bass.mp3'), mute: false, solo: false, panValue: 0 },
+            click: { audio: new Audio('audio/eye-click.mp3'), mute: false, solo: false, panValue: 0 }
+        };
+
+        Object.keys(tracks).forEach(key => {
+            tracks[key].audio.loop = true;
+            tracks[key].audio.preload = 'auto';
+            tracks[key].audio.crossOrigin = 'anonymous';
+        });
+
+        let isPlaying = false;
+        let isDragging = false;
+
+        const masterPlayBtn = document.getElementById('dawMasterPlay');
+        const globalProgressBar = document.getElementById('globalProgressBar');
+        const currentTimeLabel = document.getElementById('currentTimeLabel');
+        const totalTimeLabel = document.getElementById('totalTimeLabel');
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+                Object.keys(tracks).forEach(key => {
+                    const t = tracks[key];
+                    t.source = audioCtx.createMediaElementSource(t.audio);
+                    t.panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+                    t.gainNode = audioCtx.createGain();
+
+                    if (t.panner) {
+                        t.source.connect(t.panner);
+                        t.panner.connect(t.gainNode);
+                    } else {
+                        t.source.connect(t.gainNode);
+                    }
+                    t.gainNode.connect(audioCtx.destination);
+                });
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function formatTime(secs) {
+            if (isNaN(secs) || secs === Infinity) return "0:00";
+            let m = Math.floor(secs / 60);
+            let s = Math.floor(secs % 60);
+            return m + ":" + (s < 10 ? "0" + s : s);
+        }
+
+        tracks.stereo.audio.addEventListener('timeupdate', () => {
+            const seek = tracks.stereo.audio.currentTime || 0;
+            const duration = tracks.stereo.audio.duration || 0;
+            currentTimeLabel.textContent = formatTime(seek);
+            if (duration > 0) {
+                totalTimeLabel.textContent = formatTime(duration);
+                if (!isDragging) {
+                    globalProgressBar.value = (seek / duration) * 100;
+                }
+            }
+        });
+
+        globalProgressBar.addEventListener('mousedown', () => isDragging = true);
+        globalProgressBar.addEventListener('touchstart', () => isDragging = true);
+        globalProgressBar.addEventListener('input', (e) => {
+            const duration = tracks.stereo.audio.duration || 0;
+            if (duration === 0) return;
+            const targetTime = (e.target.value / 100) * duration;
+            Object.keys(tracks).forEach(key => tracks[key].audio.currentTime = targetTime);
+        });
+        globalProgressBar.addEventListener('change', () => isDragging = false);
+        globalProgressBar.addEventListener('touchend', () => isDragging = false);
+
+        masterPlayBtn.addEventListener('click', () => {
+            initAudioContext();
+            if (!isPlaying) {
+                Promise.all(Object.keys(tracks).map(key => tracks[key].audio.play()))
+                    .then(() => {
+                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
+                        masterPlayBtn.classList.add('playing');
+                        isPlaying = true;
+                    })
+                    .catch(() => {
+                        Object.keys(tracks).forEach(key => tracks[key].audio.play());
+                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
+                        masterPlayBtn.classList.add('playing');
+                        isPlaying = true;
+                    });
+            } else {
+                Object.keys(tracks).forEach(key => tracks[key].audio.pause());
+                masterPlayBtn.textContent = "▶ REPRODUCIR MIX";
+                masterPlayBtn.classList.remove('playing');
+                isPlaying = false;
+            }
+        });
+
+        function updateMix() {
+            const anySolo = Object.keys(tracks).some(key => tracks[key].solo);
+            Object.keys(tracks).forEach(key => {
+                const t = tracks[key];
+                let shouldVolume = 1;
+
+                if (t.mute) {
+                    shouldVolume = 0;
+                } else if (anySolo && !t.solo) {
+                    shouldVolume = 0;
+                }
+
+                if (t.gainNode) {
+                    t.gainNode.gain.setValueAtTime(shouldVolume, audioCtx.currentTime);
+                } else {
+                    t.audio.muted = (shouldVolume === 0);
+                }
+            });
+        }
+
+        function toggleMute(key) {
+            tracks[key].mute = !tracks[key].mute;
+            document.getElementById(`mute-${key}`).classList.toggle('mute-active', tracks[key].mute);
+            updateMix();
+        }
+
+        function toggleSolo(key) {
+            tracks[key].solo = !tracks[key].solo;
+            document.getElementById(`solo-${key}`).classList.toggle('solo-active', tracks[key].solo);
+            updateMix();
+        }
+
+        function handlePan(key, val) {
+            initAudioContext();
+            const value = parseFloat(val);
+            tracks[key].panValue = value;
+            if (tracks[key].panner) {
+                tracks[key].panner.pan.setValueAtTime(value, audioCtx.currentTime);
+            }
+        }
+
+        document.getElementById('mute-stereo').addEventListener('click', () => toggleMute('stereo'));
+        document.getElementById('solo-stereo').addEventListener('click', () => toggleSolo('stereo'));
+        document.getElementById('pan-slider-stereo').addEventListener('input', (e) => handlePan('stereo', e.target.value));
+
+        document.getElementById('mute-bass').addEventListener('click', () => toggleMute('bass'));
+        document.getElementById('solo-bass').addEventListener('click', () => toggleSolo('bass'));
+        document.getElementById('pan-slider-bass').addEventListener('input', (e) => handlePan('bass', e.target.value));
+
+        document.getElementById('mute-click').addEventListener('click', () => toggleMute('click'));
+        document.getElementById('solo-click').addEventListener('click', () => toggleSolo('click'));
+        document.getElementById('pan-slider-click').addEventListener('input', (e) => handlePan('click', e.target.value));
+    </script>
+</body>
+</html>
