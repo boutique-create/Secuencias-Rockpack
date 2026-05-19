@@ -93,19 +93,9 @@
             line-height: 1.6;
         }
 
-        .pack-explanation p {
-            margin: 0 0 10px 0;
-        }
-
-        .pack-explanation ul {
-            margin: 0;
-            padding-left: 20px;
-            color: var(--text-muted);
-        }
-
-        .pack-explanation ul li {
-            margin-bottom: 5px;
-        }
+        .pack-explanation p { margin: 0 0 10px 0; }
+        .pack-explanation ul { margin: 0; padding-left: 20px; color: var(--text-muted); }
+        .pack-explanation ul li { margin-bottom: 5px; }
 
         .track-table {
             width: 100%;
@@ -138,13 +128,14 @@
             background: none;
             border: 1px solid #495057;
             color: var(--text-muted);
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 600;
             margin: 0 auto 30px auto;
             transition: all 0.2s;
+            text-transform: uppercase;
         }
 
         .btn-modal-trigger:hover {
@@ -153,7 +144,7 @@
             background-color: rgba(255,255,255,0.05);
         }
 
-        /* --- MINI DAW --- */
+        /* --- CONTENEDOR DEL MEZCLADOR (AUDIO) --- */
         .daw-container {
             background-color: var(--daw-bg);
             border: 2px solid var(--border-rack);
@@ -296,7 +287,7 @@
         .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
         .btn-acquire:hover { background-color: var(--cyan-led-hover); transform: scale(1.02); }
 
-        /* MODAL */
+        /* PANTALLA EMERGENTE (MODAL) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 550px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
@@ -471,4 +462,4 @@
             </div>
             <div class="modal-body">
                 <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE W
+                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE WAL
