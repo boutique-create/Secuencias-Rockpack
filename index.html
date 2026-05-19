@@ -100,7 +100,7 @@
         .track-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             font-size: 0.95rem;
         }
 
@@ -122,27 +122,6 @@
         .track-name { font-weight: 600; color: #ffffff; }
         .track-desc { color: var(--text-muted); }
         .led-check { color: var(--success-green); font-weight: bold; text-align: right; font-size: 1.1rem; }
-
-        .btn-modal-trigger {
-            display: block;
-            background: none;
-            border: 1px solid #495057;
-            color: var(--text-muted);
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin: 0 auto 30px auto;
-            transition: all 0.2s;
-            text-transform: uppercase;
-        }
-
-        .btn-modal-trigger:hover {
-            color: #ffffff;
-            border-color: #6c757d;
-            background-color: rgba(255,255,255,0.05);
-        }
 
         /* --- CONTENEDOR DEL MEZCLADOR (AUDIO) --- */
         .daw-container {
@@ -287,18 +266,6 @@
         .btn-acquire { display: inline-block; background-color: var(--cyan-led); color: #0d1117; text-decoration: none; padding: 18px 0; width: 90%; max-width: 420px; border-radius: 50px; font-weight: bold; font-size: 1.15rem; text-transform: uppercase; box-shadow: 0 0 20px rgba(0, 255, 240, 0.4); }
         .btn-acquire:hover { background-color: var(--cyan-led-hover); transform: scale(1.02); }
 
-        /* PANTALLA EMERGENTE (MODAL) */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 1000; padding: 20px; }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-box { background-color: var(--bg-card); border: 2px solid var(--border-rack); border-radius: 12px; width: 100%; max-width: 550px; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        .modal-header { padding: 20px 25px; border-bottom: 1px solid #343a40; display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { margin: 0; font-size: 1.3rem; color: #ffffff; }
-        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 1.8rem; cursor: pointer; }
-        .modal-body { padding: 25px; overflow-y: auto; flex-grow: 1; }
-        .songs-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 0; margin: 0; list-style: none; }
-        @media (min-width: 480px) { .songs-grid { grid-template-columns: 1fr 1fr; gap: 12px; } }
-        .songs-grid li { font-size: 0.9rem; color: #dee2e6; padding: 6px 10px; background-color: rgba(255,255,255,0.02); border-left: 3px solid var(--cyan-led); border-radius: 0 4px 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
         footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; color: #6c757d; }
     </style>
 </head>
@@ -366,8 +333,6 @@
                     </tr>
                 </tbody>
             </table>
-
-            <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
                 <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
@@ -454,12 +419,68 @@
         </div>
     </main>
 
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <ul class="songs-grid">
-                    <li>1. A THOUSAND YEARS</li><li>2. ADVENTURE OF A LIFETIME</li><li>3. AFRICA</li><li>4. ANOTHER BRICK IN THE WAL
+    <footer>
+        <p>&copy; 2026 Boutique-Create. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        const tracks = {
+            stereo: { audio: new Audio('audio/eye-stereo.mp3'), mute: false, solo: false, panValue: 0 },
+            bass: { audio: new Audio('audio/eye-bass.mp3'), mute: false, solo: false, panValue: 0 },
+            click: { audio: new Audio('audio/eye-click.mp3'), mute: false, solo: false, panValue: 0 }
+        };
+
+        Object.keys(tracks).forEach(key => {
+            tracks[key].audio.loop = true;
+            tracks[key].audio.preload = 'auto';
+            tracks[key].audio.crossOrigin = 'anonymous';
+        });
+
+        let isPlaying = false;
+        let isDragging = false;
+
+        const masterPlayBtn = document.getElementById('dawMasterPlay');
+        const globalProgressBar = document.getElementById('globalProgressBar');
+        const currentTimeLabel = document.getElementById('currentTimeLabel');
+        const totalTimeLabel = document.getElementById('totalTimeLabel');
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+                Object.keys(tracks).forEach(key => {
+                    const t = tracks[key];
+                    t.source = audioCtx.createMediaElementSource(t.audio);
+                    t.panner = audioCtx.createStereoPanner ? audioCtx.createStereoPanner() : null;
+                    t.gainNode = audioCtx.createGain();
+
+                    if (t.panner) {
+                        t.source.connect(t.panner);
+                        t.panner.connect(t.gainNode);
+                    } else {
+                        t.source.connect(t.gainNode);
+                    }
+                    t.gainNode.connect(audioCtx.destination);
+                });
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function formatTime(secs) {
+            if (isNaN(secs) || secs === Infinity) return "0:00";
+            let m = Math.floor(secs / 60);
+            let s = Math.floor(secs % 60);
+            return m + ":" + (s < 10 ? "0" + s : s);
+        }
+
+        if (tracks.stereo && tracks.stereo.audio) {
+            tracks.stereo.audio.addEventListener('timeupdate', () => {
+                const seek = tracks.stereo.audio.currentTime || 0;
+                const duration = tracks.stereo.audio.duration || 0;
+                if (currentTimeLabel) currentTimeLabel.textContent = formatTime(seek);
+                if (duration > 0 && totalTimeLabel) {
+                    totalTimeLabel.
