@@ -31,6 +31,30 @@
             padding: 0;
         }
 
+        /* --- BARRA SELECTORA DE IDIOMA --- */
+        .lang-bar {
+            background-color: #1a1e21;
+            padding: 10px 20px;
+            text-align: right;
+            border-bottom: 2px solid var(--border-rack);
+        }
+        .btn-lang {
+            background: none;
+            border: 1px solid #495057;
+            color: var(--text-muted);
+            padding: 5px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-lang:hover, .btn-lang.active {
+            color: var(--cyan-led);
+            border-color: var(--cyan-led);
+            background-color: rgba(0, 255, 240, 0.05);
+        }
+
         .brand-header {
             background-color: #ffffff;
             padding: 50px 20px 40px 20px;
@@ -289,7 +313,6 @@
             border-radius: 1px;
             transition: height 0.15s ease;
         }
-        /* Colores vivos cuando el reproductor esté activo */
         body.playing-global .ch-stereo .vubar { background-color: #a855f7; }
         body.playing-global .ch-bass .vubar { background-color: #ec4899; }
         body.playing-global .ch-click .vubar { background-color: #f59e0b; }
@@ -337,6 +360,11 @@
 </head>
 <body>
 
+    <div class="lang-bar">
+        <button class="btn-lang active" id="btn-lang-es" onclick="setLanguage('es')">ES</button>
+        <button class="btn-lang" id="btn-lang-en" onclick="setLanguage('en')">EN</button>
+    </div>
+
     <header class="brand-header">
         <div class="logo-container">
             <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -360,55 +388,55 @@
 
     <main class="main-content">
         <div class="console-card">
-            <h2>Mega Pack de Secuencias Musicales</h2>
-            <p class="subtitle">Multi tracks de secuencias musicales profesionales para requerimientos y optimizaciones de tus shows en vivo.</p>
+            <h2 data-es="Mega Pack de Secuencias Musicales" data-en="Mega Pack of Musical Sequences">Mega Pack de Secuencias Musicales</h2>
+            <p class="subtitle" data-es="Multi tracks de secuencias musicales profesionales para requerimientos y optimizaciones de tus shows en vivo." data-en="Multi-track professional musical sequences for your live show requirements and optimizations.">Multi tracks de secuencias musicales profesionales para requerimientos y optimizaciones de tus shows en vivo.</p>
 
             <div class="pack-explanation">
-                <p><strong>¿Qué incluye este paquete profesional?</strong></p>
-                <p>Recibirás acceso completo a un catálogo selecto de <strong>110 canciones icónicas</strong>. Cada una de ellas viene perfectamente dividida en su estructura nativa de <strong>3 tracks independientes</strong>, permitiéndote un control total sobre la mezcla de tu show en vivo:</p>
+                <p><strong data-es="¿Qué incluye este paquete profesional?" data-en="What does this professional pack include?">¿Qué incluye este paquete profesional?</strong></p>
+                <p data-es="Recibirás acceso completo a un catálogo selecto de 110 canciones icónicas. Cada una de ellas viene perfectamente dividida en su estructura nativa de 3 tracks independientes, permitiéndote un control total sobre la mezcla de tu show en vivo:" data-en="You will get full access to a select catalog of 110 iconic songs. Each one comes perfectly split into its native structure of 3 independent tracks, allowing you full control over your live show mix:">Recibirás acceso completo a un catálogo selecto de 110 canciones icónicas. Cada una de ellas viene perfectamente dividida en su estructura nativa de 3 tracks independientes, permitiéndote un control total sobre la mezcla de tu show en vivo:</p>
                 <ul>
-                    <li><strong>Bass Track:</strong> El bajo por separado para refuerzo en sala o monetores.</li>
-                    <li><strong>Click Track:</strong> Guía de metrónomo estricta para mantener a la banda sincronizada.</li>
-                    <li><strong>Instrumental Mix:</strong> La base musical completa libre de Batería y Voz principal.</li>
+                    <li data-es="Bass Track: El bajo por separado para refuerzo en sala o monitores." data-en="Bass Track: Separated bass for front-of-house or monitor reinforcement.">Bass Track: El bajo por separado para refuerzo en sala o monitores.</li>
+                    <li data-es="Click Track: Guía de metrónomo estricta para mantener a la banda sincronizada." data-en="Click Track: Strict metronome guide to keep the band perfectly synchronized.">Click Track: Guía de metrónomo estricta para mantener a la banda sincronizada.</li>
+                    <li data-es="Instrumental Mix: La base musical completa libre de Batería y Voz principal." data-en="Instrumental Mix: The complete musical backing track, free of Drums and Lead Vocals.">Instrumental Mix: La base musical completa libre de Batería y Voz principal.</li>
                 </ul>
             </div>
 
             <table class="track-table">
                 <thead>
                     <tr>
-                        <th>Estructura Multi-Track</th>
-                        <th>Descripción</th>
-                        <th style="text-align: right;">Estado</th>
+                        <th data-es="Estructura Multi-Track" data-en="Multi-Track Structure">Estructura Multi-Track</th>
+                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                        <th style="text-align: right;" data-es="Estado" data-en="Status">Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="track-name">Bass Track</td>
-                        <td class="track-desc">Canal de bajo eléctrico o sintético directo por separado.</td>
+                        <td class="track-desc" data-es="Canal de bajo eléctrico o sintético directo por separado." data-en="Isolated electric or synth bass channel.">Canal de bajo eléctrico o sintético directo por separado.</td>
                         <td class="led-check">✓</td>
                     </tr>
                     <tr>
                         <td class="track-name">Stereo Instrument Track</td>
-                        <td class="track-desc">Mezcla estéreo completa de instrumentación (Sin batería y sin voz).</td>
+                        <td class="track-desc" data-es="Mezcla estéreo completa de instrumentación (Sin batería y sin voz)." data-en="Full stereo backing mix of instrumentation (No drums, no vocals).">Mezcla estéreo completa de instrumentación (Sin batería y sin voz).</td>
                         <td class="led-check">✓</td>
                     </tr>
                     <tr>
                         <td class="track-name">Click Track</td>
-                        <td class="track-desc">Guía de metrónomo estricta para sincronización en directo.</td>
+                        <td class="track-desc" data-es="Guía de metrónomo estricta para sincronización en directo." data-en="Strict metronome guide for live timing synchronization.">Guía de metrónomo estricta para sincronización en directo.</td>
                         <td class="led-check">✓</td>
                     </tr>
                 </tbody>
             </table>
 
-            <button class="btn-modal-trigger" id="openModalBtn">📂 VER LISTA DE LAS 110 CANCIONES</button>
+            <button class="btn-modal-trigger" id="openModalBtn" data-es="📂 VER LISTA DE LAS 110 CANCIONES" data-en="📂 VIEW THE 110 SONGS LIST">📂 VER LISTA DE LAS 110 CANCIONES</button>
 
             <div class="daw-container">
-                <p class="daw-title">🎛️ Mezclador Multitrack Interactivo</p>
-                <p class="daw-subtitle">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
-                <p style="text-align: center; font-size: 0.75rem; color: var(--warning); margin: -10px 0 20px 0; font-style: italic;">🎧 Utiliza audífonos para escuchar la referencia estéreo</p>
+                <p class="daw-title" data-es="🎛️ Mezclador Multitrack Interactivo" data-en="🎛️ Interactive Multitrack Mixer">🎛️ Mezclador Multitrack Interactivo</p>
+                <p class="daw-subtitle" data-es="Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real." data-en="Tweak the mix, mutes, solos, and stereo panning (L/R) in real time.">Modifica la mezcla, mutes, solos y paneo estéreo (L/R) en tiempo real.</p>
+                <p style="text-align: center; font-size: 0.75rem; color: var(--warning); margin: -10px 0 20px 0; font-style: italic;" data-es="🎧 Utiliza audífonos para escuchar la referencia estéreo" data-en="🎧 Use headphones to experience the stereo reference">🎧 Utiliza audífonos para escuchar la referencia estéreo</p>
                 
                 <div class="daw-master-controls">
-                    <button class="btn-master" id="dawMasterPlay">▶ REPRODUCIR MIX</button>
+                    <button class="btn-master" id="dawMasterPlay" data-es="▶ REPRODUCIR MIX" data-en="▶ PLAY MIX">▶ REPRODUCIR MIX</button>
                     
                     <div class="timeline-container">
                         <span id="currentTimeLabel">0:00</span>
@@ -419,7 +447,7 @@
 
                 <div class="daw-channel ch-stereo">
                     <div class="channel-info">
-                        <p class="channel-name">Stereo Instruments</p>
+                        <p class="channel-name" data-es="Stereo Instruments" data-en="Stereo Instruments">Stereo Instruments</p>
                         <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-stereo">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
@@ -440,7 +468,7 @@
 
                 <div class="daw-channel ch-bass">
                     <div class="channel-info">
-                        <p class="channel-name">Bass Track</p>
+                        <p class="channel-name" data-es="Bass Track" data-en="Bass Track">Bass Track</p>
                         <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-bass">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
@@ -461,13 +489,12 @@
 
                 <div class="daw-channel ch-click">
                     <div class="channel-info">
-                        <p class="channel-name">Click Track</p>
+                        <p class="channel-name" data-es="Click Track" data-en="Click Track">Click Track</p>
                         <p class="channel-track-title">It's My Life</p>
                         <div class="vumeter-container" id="vu-click">
                             <div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div><div class="vubar"></div>
                         </div>
                     </div>
-                    <div>
                     <div class="channel-controls-group">
                         <div class="pan-container">
                             <span>L</span>
@@ -483,17 +510,17 @@
             </div>
 
             <div class="price-container" style="text-align: center; margin: 30px 0 25px 0;">
-                <span class="price-label" style="display: block; margin-bottom: 5px;">Precio Único:</span>
+                <span class="price-label" style="display: block; margin-bottom: 5px;" data-es="Precio Único:" data-en="One-Time Price:">Precio Único:</span>
                 <span class="price-value" style="font-size: 2.6rem; display: block;">$1,699 MXN</span>
             </div>
 
             <div class="tech-spec-box">
                 <span class="badge">16GB MEGA</span>
-                <p>La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA.</p>
+                <p data-es="La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA." data-en="The complete download consists of a compressed 16GB package safely hosted on high-speed MEGA servers.">La descarga completa consta de un paquete comprimido de 16GB alojado de manera segura en servidores de alta velocidad de MEGA.</p>
             </div>
 
             <div class="action-container">
-                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire">Adquirir Paquete</a>
+                <a href="https://buy.stripe.com/cNi28r25lf0J2e041R1B605" class="btn-acquire" data-es="Adquirir Paquete" data-en="Get the Pack Now">Adquirir Paquete</a>
             </div>
         </div>
     </main>
@@ -501,7 +528,7 @@
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-box">
             <div class="modal-header">
-                <h3>Contenido del Paquete (110 Canciones)</h3>
+                <h3 data-es="Contenido del Paquete (110 Canciones)" data-en="Package Contents (110 Songs)">Contenido del Paquete (110 Canciones)</h3>
                 <button class="modal-close" id="closeModalBtn">&times;</button>
             </div>
             <div class="modal-body">
@@ -517,6 +544,30 @@
     </footer>
 
     <script>
+        // --- FUNCIÓN DINÁMICA DE IDIOMA ---
+        let currentLang = 'es';
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            // Actualizar botones visuales
+            document.getElementById('btn-lang-es').classList.toggle('active', lang === 'es');
+            document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+            
+            // Cambiar todos los textos con data attributes
+            const elements = document.querySelectorAll('[data-es]');
+            elements.forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            
+            // Actualizar texto dinámico del botón master del DAW según estado
+            const masterPlayBtn = document.getElementById('dawMasterPlay');
+            if (isPlaying) {
+                masterPlayBtn.textContent = lang === 'es' ? "⏸ PAUSAR MIX" : "⏸ PAUSE MIX";
+            } else {
+                masterPlayBtn.textContent = lang === 'es' ? "▶ REPRODUCIR MIX" : "▶ PLAY MIX";
+            }
+        }
+
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -654,21 +705,21 @@
             if (!isPlaying) {
                 Promise.all(Object.keys(tracks).map(key => tracks[key].audio.play()))
                     .then(() => {
-                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
+                        masterPlayBtn.textContent = currentLang === 'es' ? "⏸ PAUSAR MIX" : "⏸ PAUSE MIX";
                         masterPlayBtn.classList.add('playing');
                         isPlaying = true;
                         startVuMeters();
                     })
                     .catch(() => {
                         Object.keys(tracks).forEach(key => tracks[key].audio.play());
-                        masterPlayBtn.textContent = "⏸ PAUSAR MIX";
+                        masterPlayBtn.textContent = currentLang === 'es' ? "⏸ PAUSAR MIX" : "⏸ PAUSE MIX";
                         masterPlayBtn.classList.add('playing');
                         isPlaying = true;
                         startVuMeters();
                     });
             } else {
                 Object.keys(tracks).forEach(key => tracks[key].audio.pause());
-                masterPlayBtn.textContent = "▶ REPRODUCIR MIX";
+                masterPlayBtn.textContent = currentLang === 'es' ? "▶ REPRODUCIR MIX" : "▶ PLAY MIX";
                 masterPlayBtn.classList.remove('playing');
                 isPlaying = false;
                 stopVuMeters();
