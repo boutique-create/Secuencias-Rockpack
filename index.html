@@ -31,25 +31,20 @@
             padding: 0;
         }
 
-        /* --- BARRA SELECTORA DE IDIOMA --- */
-        .lang-bar {
-            background-color: #1a1e21;
-            padding: 10px 20px;
-            text-align: right;
-            border-bottom: 2px solid var(--border-rack);
-        }
+        /* --- BOTÓN SELECTOR DE IDIOMA --- */
         .btn-lang {
-            background: none;
-            border: 1px solid #495057;
+            background-color: #1a1e21;
+            border: 1px solid #343a40;
             color: var(--text-muted);
-            padding: 5px 12px;
+            padding: 6px 16px;
             cursor: pointer;
-            border-radius: 4px;
-            font-size: 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: bold;
             transition: all 0.2s;
+            outline: none;
         }
-        .btn-lang:hover, .btn-lang.active {
+        .btn-lang:hover {
             color: var(--cyan-led);
             border-color: var(--cyan-led);
             background-color: rgba(0, 255, 240, 0.05);
@@ -360,11 +355,6 @@
 </head>
 <body>
 
-    <div class="lang-bar">
-        <button class="btn-lang active" id="btn-lang-es" onclick="setLanguage('es')">ES</button>
-        <button class="btn-lang" id="btn-lang-en" onclick="setLanguage('en')">EN</button>
-    </div>
-
     <header class="brand-header">
         <div class="logo-container">
             <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -384,6 +374,10 @@
             </svg>
         </div>
         <h1 class="brand-name">Boutique-Create</h1>
+        
+        <div style="margin-top: 15px;">
+            <button class="btn-lang" id="btn-lang-toggle" onclick="toggleLanguage()">Español / English</button>
+        </div>
     </header>
 
     <main class="main-content">
@@ -546,25 +540,31 @@
     <script>
         // --- FUNCIÓN DINÁMICA DE IDIOMA ---
         let currentLang = 'es';
-        function setLanguage(lang) {
-            currentLang = lang;
+        
+        function toggleLanguage() {
+            currentLang = (currentLang === 'es') ? 'en' : 'es';
             
-            // Actualizar botones visuales
-            document.getElementById('btn-lang-es').classList.toggle('active', lang === 'es');
-            document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+            const btn = document.getElementById('btn-lang-toggle');
+            if (currentLang === 'es') {
+                btn.style.color = '#adb5bd';
+                btn.style.borderColor = '#343a40';
+                btn.style.backgroundColor = '#1a1e21';
+            } else {
+                btn.style.color = '#00fff0'; 
+                btn.style.borderColor = '#00fff0';
+                btn.style.backgroundColor = 'rgba(0, 255, 240, 0.05)';
+            }
             
-            // Cambiar todos los textos con data attributes
             const elements = document.querySelectorAll('[data-es]');
             elements.forEach(el => {
-                el.textContent = el.getAttribute(`data-${lang}`);
+                el.textContent = el.getAttribute(`data-${currentLang}`);
             });
             
-            // Actualizar texto dinámico del botón master del DAW según estado
             const masterPlayBtn = document.getElementById('dawMasterPlay');
             if (isPlaying) {
-                masterPlayBtn.textContent = lang === 'es' ? "⏸ PAUSAR MIX" : "⏸ PAUSE MIX";
+                masterPlayBtn.textContent = currentLang === 'es' ? "⏸ PAUSAR MIX" : "⏸ PAUSE MIX";
             } else {
-                masterPlayBtn.textContent = lang === 'es' ? "▶ REPRODUCIR MIX" : "▶ PLAY MIX";
+                masterPlayBtn.textContent = currentLang === 'es' ? "▶ REPRODUCIR MIX" : "▶ PLAY MIX";
             }
         }
 
